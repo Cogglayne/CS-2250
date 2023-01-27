@@ -2,9 +2,8 @@
 //
 
 #include <iostream>
-#include <string>
 using namespace std;
-void showMenu()
+void showSelections()
 {
 	cout << "********************************************************************************" << endl;
 	cout << "* 1 - Square" << endl;
@@ -59,9 +58,9 @@ int sizeSelection(int selection, int choice)
 	return selection;
 }
 void drawSquare(int size) {
-	for (int i = 0; i < size; i++) 
+	for (int row = 0; row < size; row++)
 	{
-		for (int j = 0; j < size; j++) 
+		for (int col = 0; col < size; col++)
 		{
 			cout << "*";
 		}
@@ -69,33 +68,88 @@ void drawSquare(int size) {
 	}
 }
 void drawRightTriangle(int size) {
-	for (int i = 1; i <= size; i++)
+	for (int row = 0; row < size; row++)
 	{
-		for (int j = 1; j <= i; j++)
-			cout << "*";
-			cout << endl;
-	}
-}
-void drawIsocelesTriangle(int size) 
-{
-	for (int i = 1; i <= size; i++)
-	{
-		for (int j = 0; j < size - i; j++)
-			cout << " ";
-
-		for (int j = 1; j <= i; j++)
-			cout << "* ";
-			cout << endl;
-	}
-}
-void drawHourGlass(int size) {
-	for (int i = 0; i < size; i++)
-	{
-		for (int j = size; j > 0; j--)
+		for (int col = 0; col <= row; col++)
 		{
 			cout << "*";
 		}
 		cout << endl;
+	}
+}
+void drawIsocelesTriangle(int size) 
+{
+	int spaceCount = size - 1;
+	for (int row = 0; row < size; row++)
+	{
+		for (int space = spaceCount; space > 0; space--) 
+		{
+			cout << " ";
+		}
+		for (int col = 0; col <= (row * 2); col++)
+		{
+			cout << "*";
+		}
+		spaceCount--;
+		cout << endl;
+	}
+}
+void drawHourGlass(int size) {
+	int spaceCount = size;
+	for (int row = size - 1; row >= 0; row--)
+	{
+		for (int space = spaceCount; space < size; space++)
+		{
+			cout << " ";
+		}
+		for (int col = (row * 2); col >= 0; col--)
+		{
+			cout << "*";
+		}
+		spaceCount--;
+		cout << endl;
+	}
+	spaceCount = size - 2;
+	for (int row = 1; row < size; row++)
+	{
+		for (int space = spaceCount; space > 0; space--)
+		{
+			cout << " ";
+		}
+		for (int col = 0; col <= (row * 2); col++)
+		{
+			cout << "*";
+		}
+		spaceCount--;
+		cout << endl;
+	}
+}
+void drawDiamond() 
+{
+
+}
+void drawShape(int size, int selection) 
+{
+	switch (selection) {
+	case 1:
+		// draw square
+		drawSquare(size);
+		break;
+	case 2:
+		// draw right triangle
+		drawRightTriangle(size);
+		break;
+	case 3:
+		// draw isoceles triangle
+		drawIsocelesTriangle(size);
+		break;
+	case 4:
+		// draw hourglass
+		drawHourGlass(size);
+		break;
+	case 5:
+		// draw diamond
+		break;
 	}
 }
 int main()
@@ -105,30 +159,10 @@ int main()
 	int size = 0;
 	int choice = 0;
 	while (true) {
-		showMenu();
+		showSelections();
 		choice = choiceSelection(choice);
 		size = sizeSelection(size, choice);
-		switch (choice) {
-		case 1:
-			// draw square
-			drawSquare(size);
-			break;
-		case 2:
-			// draw right triangle
-			drawRightTriangle(size);
-			break;
-		case 3:
-			// draw isoceles triangle
-			drawIsocelesTriangle(size);
-			break;
-		case 4:
-			// draw hourglass
-			drawHourGlass(size);
-			break;
-		case 5:
-			// draw diamond
-			break;
-		}
+		drawShape(size, choice);
 	}
 }
 
