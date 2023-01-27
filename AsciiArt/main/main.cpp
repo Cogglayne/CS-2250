@@ -1,8 +1,51 @@
-// main.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 using namespace std;
+
+void showShapeSelections();
+
+void showSizeSelections(int choice);
+
+int selectOption(int selection);
+
+int selectSize(int selection, int choice);
+
+void drawSquare(int size);
+
+void drawRightTriangle(int size);
+
+void drawIsocelesTriangle(int size);
+
+void drawHourGlass(int size);
+
+void drawDiamond(int size);
+
+void drawShape(int size, int selection);
+
+/*
+*This is the main function, execution
+ starts here. Initial prompts are presented to the user
+ after that the user is given the opportunity to select
+ a shape to draw and a size to the shape at until the
+ user either closes the program or selects 6 to quit.
+*/
+int main()
+{
+	cout << "Welcome to the shape renderer!" << endl;
+	cout << "You can draw a few different shapes at a variety of sizes!" << endl;
+
+	int size = 0;
+	int choice = 0;
+
+	while (true)
+	{
+		showShapeSelections();
+		choice = selectOption(choice);
+		size = selectSize(size, choice);
+		drawShape(size, choice);
+	}
+}
+
 /*
 * Shows the shape options the user can select
 */
@@ -17,10 +60,12 @@ void showShapeSelections()
 	cout << "* 6 - Quit(exit the application)" << endl;
 	cout << "********************************************************************************" << endl;
 }
+
 /*
 * Shows the size options the user can select
 */
-void showSizeSelections(int selection, int choice) {
+void showSizeSelections(int choice)
+{
 	switch (choice)
 	{
 	case 1:
@@ -45,42 +90,53 @@ void showSizeSelections(int selection, int choice) {
 		break;
 	}
 }
+
 /*
 * Takes user input to either draw a shape or quit the application, error checks for any selection no presented to the user
 */
-int choiceSelection(int selection)
+int selectOption(int selection)
 {
+	bool optionNotValid;
 	do
 	{
 		cout << "Please select a menu option (1-6)" << endl;
 		cin >> selection;
-		// checks if user input is a valid selection, accepts the input if its valid, otherwise an error message is outputed,
-		// and the user is prompted again to enter a valid selection
-	} while ((selection <= 0 || selection >= 7) && cout << "You have not selected a valid menu option, please try again." << endl);
+		optionNotValid = (selection <= 0 || selection >= 7);
+		if (optionNotValid) {
+			cout << "You have not selected a valid menu option, please try again." << endl;
+		}
+	} while (optionNotValid);
 	// exits the game if option 6 is selected
 	if (selection == 6) {
 		exit(0);
 	}
 	return selection;
 }
+
 /*
 * Takes user input to set what size the chosen shape is to be drawn at, error checks for any selection no presented to the user
 */
-int sizeSelection(int selection, int choice)
+int selectSize(int selection, int choice)
 {
+	bool sizeNotValid;
 	do
 	{
-		showSizeSelections(selection, choice);
+		showSizeSelections(choice);
 		cin >> selection;
-		// checks if user input is a valid selection, accepts the input if its valid, otherwise an error message is outputed,
-		// and the user is prompted again to enter a valid selection
-	} while ((selection <= 0 || selection >= 21) && cout << "You have not selected an appropriate size, please try again." << endl);
+		sizeNotValid = (selection <= 0 || selection >= 21);
+		if (sizeNotValid)
+		{
+			cout << "You have not selected an appropriate size, please try again." << endl;
+		}
+	} while (sizeNotValid);
 	return selection;
 }
+
 /*
 * Draws a square based on the size chosen by the user
 */
-void drawSquare(int size) {
+void drawSquare(int size)
+{
 	for (int row = 0; row < size; row++)
 	{
 		for (int col = 0; col < size; col++)
@@ -90,10 +146,12 @@ void drawSquare(int size) {
 		cout << endl;
 	}
 }
+
 /*
 *  Draws a right triangle based on the size chosen by the user
 */
-void drawRightTriangle(int size) {
+void drawRightTriangle(int size)
+{
 	for (int row = 0; row < size; row++)
 	{
 		for (int col = 0; col <= row; col++)
@@ -103,15 +161,16 @@ void drawRightTriangle(int size) {
 		cout << endl;
 	}
 }
+
 /*
 *  Draws a isoceles triangle based on the size chosen by the user
 */
-void drawIsocelesTriangle(int size) 
+void drawIsocelesTriangle(int size)
 {
 	int spaceCount = size - 1;
 	for (int row = 0; row < size; row++)
 	{
-		for (int space = spaceCount; space > 0; space--) 
+		for (int space = spaceCount; space > 0; space--)
 		{
 			cout << " ";
 		}
@@ -123,10 +182,12 @@ void drawIsocelesTriangle(int size)
 		cout << endl;
 	}
 }
+
 /*
 *  Draws an hour glass based on the size chosen by the user
 */
-void drawHourGlass(int size) {
+void drawHourGlass(int size)
+{
 	int spaceCount = size;
 	for (int row = size - 1; row >= 0; row--)
 	{
@@ -157,13 +218,14 @@ void drawHourGlass(int size) {
 		cout << endl;
 	}
 }
+
 /*
 *  Draws a diamond based on the size chosen by the user
 */
-void drawDiamond(int size) 
+void drawDiamond(int size)
 {
 	int spaceCount = size - 1;
-	for (int row = 0; row < size - 1 ; row++)
+	for (int row = 0; row < size - 1; row++)
 	{
 		for (int space = spaceCount; space > 0; space--)
 		{
@@ -192,12 +254,13 @@ void drawDiamond(int size)
 		cout << endl;
 	}
 }
+
 /*
 * Draws a shape based on what shape and size the user choose
 */
-void drawShape(int size, int selection) 
+void drawShape(int size, int selection)
 {
-	switch (selection) 
+	switch (selection)
 	{
 	case 1:
 		// draw square
@@ -219,27 +282,5 @@ void drawShape(int size, int selection)
 		// draw diamond
 		drawDiamond(size);
 		break;
-	}
-}
-/*
-* This is the main function, execution
- starts here. Initial prompts are presented to the user
- after that the user is given the opportunity to select
- a shape to draw and a size to the shape at until the
- user either closes the program or selects 6 to quit.
-*/
-int main()
-{
-	cout << "Welcome to the shape renderer!" << endl;
-	cout << "You can draw a few different shapes at a variety of sizes!" << endl;
-
-	int size = 0;
-	int choice = 0;
-
-	while (true) {
-		showShapeSelections();
-		choice = choiceSelection(choice);
-		size = sizeSelection(size, choice);
-		drawShape(size, choice);
 	}
 }
