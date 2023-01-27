@@ -4,8 +4,9 @@
 #include <iostream>
 using namespace std;
 /*
+* Shows the shape options the user can select
 */
-void showSelections()
+void showShapeSelections()
 {
 	cout << "********************************************************************************" << endl;
 	cout << "* 1 - Square" << endl;
@@ -17,6 +18,35 @@ void showSelections()
 	cout << "********************************************************************************" << endl;
 }
 /*
+* Shows the size options the user can select
+*/
+void showSizeSelections(int selection, int choice) {
+	switch (choice)
+	{
+	case 1:
+		// square
+		cout << "You have selected a square!  What size should it be (1-20)?" << endl;
+		break;
+	case 2:
+		// right triangle
+		cout << "You have selected a right triangle!  What size should it be (1-20)?" << endl;
+		break;
+	case 3:
+		// isoceles triangle
+		cout << "You have selected an isosceles triangle!  What size should it be (1-20)?" << endl;
+		break;
+	case 4:
+		// hourglass
+		cout << "You have selected an hourglass!  What size should it be (1-20)?" << endl;
+		break;
+	case 5:
+		// diamond
+		cout << "You have selected a diamond!  What size should it be (1-20)?" << endl;
+		break;
+	}
+}
+/*
+* Takes user input to either draw a shape or quit the application, error checks for any selection no presented to the user
 */
 int choiceSelection(int selection)
 {
@@ -24,47 +54,31 @@ int choiceSelection(int selection)
 	{
 		cout << "Please select a menu option (1-6)" << endl;
 		cin >> selection;
+		// checks if user input is a valid selection, accepts the input if its valid, otherwise an error message is outputed,
+		// and the user is prompted again to enter a valid selection
 	} while ((selection <= 0 || selection >= 7) && cout << "You have not selected a valid menu option, please try again." << endl);
-	// exit
+	// exits the game if option 6 is selected
 	if (selection == 6) {
 		exit(0);
 	}
 	return selection;
 }
 /*
+* Takes user input to set what size the chosen shape is to be drawn at, error checks for any selection no presented to the user
 */
 int sizeSelection(int selection, int choice)
 {
 	do
 	{
-		switch (choice) 
-		{
-		case 1:
-			// square
-			cout << "You have selected a square!  What size should it be (1-20)?" << endl;
-			break;
-		case 2:
-			// right triangle
-			cout << "You have selected a right triangle!  What size should it be (1-20)?" << endl;
-			break;
-		case 3:
-			// isoceles triangle
-			cout << "You have selected an isosceles triangle!  What size should it be (1-20)?" << endl;
-			break;
-		case 4:
-			// hourglass
-			cout << "You have selected an hourglass!  What size should it be (1-20)?" << endl;
-			break;
-		case 5:
-			// diamond
-			cout << "You have selected a diamond!  What size should it be (1-20)?" << endl;
-			break;
-		}
+		showSizeSelections(selection, choice);
 		cin >> selection;
+		// checks if user input is a valid selection, accepts the input if its valid, otherwise an error message is outputed,
+		// and the user is prompted again to enter a valid selection
 	} while ((selection <= 0 || selection >= 21) && cout << "You have not selected an appropriate size, please try again." << endl);
 	return selection;
 }
 /*
+* Draws a square based on the size chosen by the user
 */
 void drawSquare(int size) {
 	for (int row = 0; row < size; row++)
@@ -77,6 +91,7 @@ void drawSquare(int size) {
 	}
 }
 /*
+*  Draws a right triangle based on the size chosen by the user
 */
 void drawRightTriangle(int size) {
 	for (int row = 0; row < size; row++)
@@ -89,6 +104,7 @@ void drawRightTriangle(int size) {
 	}
 }
 /*
+*  Draws a isoceles triangle based on the size chosen by the user
 */
 void drawIsocelesTriangle(int size) 
 {
@@ -108,6 +124,7 @@ void drawIsocelesTriangle(int size)
 	}
 }
 /*
+*  Draws an hour glass based on the size chosen by the user
 */
 void drawHourGlass(int size) {
 	int spaceCount = size;
@@ -141,6 +158,7 @@ void drawHourGlass(int size) {
 	}
 }
 /*
+*  Draws a diamond based on the size chosen by the user
 */
 void drawDiamond(int size) 
 {
@@ -175,6 +193,7 @@ void drawDiamond(int size)
 	}
 }
 /*
+* Draws a shape based on what shape and size the user choose
 */
 void drawShape(int size, int selection) 
 {
@@ -203,6 +222,11 @@ void drawShape(int size, int selection)
 	}
 }
 /*
+* This is the main function, execution
+ starts here. Initial prompts are presented to the user
+ after that the user is given the opportunity to select
+ a shape to draw and a size to the shape at until the
+ user either closes the program or selects 6 to quit.
 */
 int main()
 {
@@ -213,7 +237,7 @@ int main()
 	int choice = 0;
 
 	while (true) {
-		showSelections();
+		showShapeSelections();
 		choice = choiceSelection(choice);
 		size = sizeSelection(size, choice);
 		drawShape(size, choice);
