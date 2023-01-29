@@ -102,12 +102,15 @@ int selectOption(int selection)
 		cout << "Please select a menu option (1-6)" << endl;
 		cin >> selection;
 		optionNotValid = (selection <= 0 || selection >= 7);
-		if (optionNotValid) {
+		if (optionNotValid)
+		{
 			cout << "You have not selected a valid menu option, please try again." << endl;
 		}
 	} while (optionNotValid);
 	// exits the game if option 6 is selected
-	if (selection == 6) {
+	if (selection == 6)
+	{
+		cout << "Thank you for using our application!  Good-bye!" << endl;
 		exit(0);
 	}
 	return selection;
@@ -189,7 +192,7 @@ void drawIsocelesTriangle(int size)
 void drawHourGlass(int size)
 {
 	int spaceCount = size;
-	for (int row = size - 1; row >= 0; row--)
+	for (int row = size - 1; row > 0; row--)
 	{
 		for (int space = spaceCount; space < size; space++)
 		{
@@ -203,20 +206,7 @@ void drawHourGlass(int size)
 		cout << endl;
 	}
 
-	spaceCount = size - 2;
-	for (int row = 1; row < size; row++)
-	{
-		for (int space = spaceCount; space > 0; space--)
-		{
-			cout << " ";
-		}
-		for (int col = 0; col <= (row * 2); col++)
-		{
-			cout << "*";
-		}
-		spaceCount--;
-		cout << endl;
-	}
+	drawIsocelesTriangle(size);
 }
 
 /*
@@ -224,23 +214,10 @@ void drawHourGlass(int size)
 */
 void drawDiamond(int size)
 {
-	int spaceCount = size - 1;
-	for (int row = 0; row < size - 1; row++)
-	{
-		for (int space = spaceCount; space > 0; space--)
-		{
-			cout << " ";
-		}
-		for (int col = 0; col <= (row * 2); col++)
-		{
-			cout << "*";
-		}
-		spaceCount--;
-		cout << endl;
-	}
+	drawIsocelesTriangle(size);
 
-	spaceCount = size;
-	for (int row = size - 1; row >= 0; row--)
+	int spaceCount = size - 1;
+	for (int row = size - 2; row >= 0; row--)
 	{
 		for (int space = spaceCount; space < size; space++)
 		{
