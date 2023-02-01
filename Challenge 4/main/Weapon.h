@@ -1,17 +1,22 @@
-#pragma once
 #include <iostream>
 #ifndef WEAPON_H
 #define WEAPON_H
+
+/*
+* A weapon
+*/
 class Weapon
 {
 public:
-	void setAmmo(int ammoAmmount);
+	// method protypes
+	void setAmmo(int ammoAmount);
 	int getAmmo();
 	bool fire();
 private:
+	// variables
 	int ammo = 0;
 };
-#endif // !WEAPON_H
 
+#endif
 
 
