@@ -1,2 +1,2 @@
 ﻿  main.cpp
-  main.vcxproj -> D:\Coding\CS 2250\CaesarCipher\x64\Debug\main.exe
+D:\Coding\CS 2250\CaesarCipher\main\main.cpp(76): error C4716: 'encryptMessage': must return a value

@@ -1,20 +1,100 @@
-// main.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
+using namespace std;
 
+void showOptions();
+
+int selectOption();
+
+string encryptMessage();
+
+int getShiftValue();
+
+/*
+* Return Value:
+*  0 if program ran successfull
+*  1 if it failed.
+* Description:
+* 
+*/
 int main()
 {
-    std::cout << "Hello World!\n";
+	int optionSelection = 0;
+	string message = "";
+	// outputs the initial greeting
+	cout << "Welcome to the Tali-banned Encrypter!" << endl;
+	cout << "Make a selection from the menu and then follow the prompts." << endl;
+
+	// shows the user the options they can select
+	showOptions();
+	optionSelection = selectOption();
+	message = encryptMessage();
+	cout << message << endl;
+	return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
+void showOptions()
+{
+	cout << "*************************************" << endl;
+	cout << "* 1 - Encrypt a message" << endl;
+	cout << "* 2 - Decrypt a message" << endl;
+	cout << "* 3 - Brute - force decrypt a message" << endl;
+	cout << "* 4 - Quit" << endl;
+	cout << "*************************************" << endl;
+}
 
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
+int selectOption()
+{
+	int selection = 0;
+	bool notValidOption;
+	cout << "Please make a menu selection (1-4):" << endl;
+	do
+	{
+		cin >> selection;
+		notValidOption = (selection <= 0 || selection >= 5);
+		if (notValidOption)
+		{
+			cout << "Invalid choice, Please make a menu selection (1-4):" << endl;
+		}
+	} while (notValidOption);
+
+	return selection;
+}
+
+string encryptMessage()
+{
+	int shiftValue = 0;
+	int messageToEncryptLength = 0;
+	string messageToEncrypt = "";
+
+
+	cout << "Please enter the message to encrypt:" << endl;
+	cin >> messageToEncrypt;
+	shiftValue = getShiftValue();
+
+	string temp = "cat";
+	char tab2[1024];
+	strcpy(tab2, temp.c_str());
+
+	string temp = "cat";
+	char tab2[1024];
+	strncpy(tab2, temp.c_str(), sizeof(tab2));
+	tab2[sizeof(tab2) - 1] = 0;
+}
+
+int getShiftValue()
+{
+	int selection = 0;
+	cout << "Please enter the shift value (1-25):" << endl;
+	bool notValidShiftValue;
+	cin.ignore();
+	do
+	{
+		cin >> selection;
+		notValidShiftValue = (selection <= 0 || selection >= 26);
+		if (notValidShiftValue)
+		{
+			cout << "Invalid choice, Please enter the shift value (1-25):" << endl;
+		}
+	} while (notValidShiftValue);
+	return selection;
+}
