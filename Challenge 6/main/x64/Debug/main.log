@@ -1,0 +1,4 @@
+﻿  main.cpp
+C:\Users\jorda\OneDrive\Desktop\Coding\CS-2250\Challenge 6\main\main.cpp(6,19): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\jorda\OneDrive\Desktop\Coding\CS-2250\Challenge 6\main\main.cpp(7,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+  main.vcxproj -> C:\Users\jorda\OneDrive\Desktop\Coding\CS-2250\Challenge 6\x64\Debug\main.exe
