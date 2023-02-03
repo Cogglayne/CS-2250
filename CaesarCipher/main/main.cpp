@@ -12,6 +12,8 @@ int getShiftValue();
 
 string decryptMessage();
 
+string getString(string message);
+
 
 
 /*
@@ -32,8 +34,19 @@ int main()
 	// shows the user the options they can select
 	showOptions();
 	optionSelection = selectOption();
-	message = decryptMessage();
-	cout << message << endl;
+	switch (optionSelection)
+	{
+	case 1:
+		message = encryptMessage();
+		cout << "Encrypted as:" << endl;
+		cout << message << endl;
+		break;
+	case 2:
+		message = decryptMessage();
+		break;
+	case 3:
+		break;
+	}
 	return 0;
 }
 
@@ -62,6 +75,11 @@ int selectOption()
 		}
 	} while (notValidOption);
 
+	if (selection == 4)
+	{
+		cout << "Thank you Caesar!  See ya!" << endl;
+		exit(0);
+	}
 	return selection;
 }
 
@@ -69,28 +87,25 @@ string encryptMessage()
 {
 	int shiftValue = 0;
 	string encryptedMessage = "";
-	cin.ignore();
-
-	cout << "Please enter the message to encrypt:" << endl;
-	getline(cin, encryptedMessage);
+	encryptedMessage = getString("Please enter the message to encrypt:");
 	shiftValue = getShiftValue();
 
 
-	char* array = &encryptedMessage[0];
-
+	unsigned char* array = (unsigned char*) & encryptedMessage[0];
 	for (int i = 0; i < encryptedMessage.length(); i++) {
 		if (isalpha(array[i])) {
 			if (islower(array[i])) {
-				if (array[i] += shiftValue > 'z') {
+				if ((array[i] += shiftValue) > 'z')
+				{
 					array[i] -= 26;
 				}
 			}
 			else if (isupper(array[i])) {
-				if (array[i] += shiftValue > 'Z') {
+				if ((array[i] += shiftValue) > 'Z')
+				{
 					array[i] -= 26;
 				}
 			}
-			array[i] += shiftValue;
 		}
 
 	}
@@ -119,10 +134,7 @@ int getShiftValue()
 string decryptMessage() {
 	int shiftValue = 0;
 	string decryptedMessage = "";
-	cin.ignore();
-
-	cout << "Please enter the message to decrypt:" << endl;
-	getline(cin, decryptedMessage);
+	decryptedMessage = getString("Please enter the message to decrypt:");
 	shiftValue = getShiftValue();
 
 	char* array = &decryptedMessage[0];
@@ -133,10 +145,19 @@ string decryptMessage() {
 				if (array[i] -= shiftValue < 'a'){
 					array[i] += 26;
 				}
+				else
+				{
+					array[i] += shiftValue;
+				}
 			}
 			else if (isupper(array[i])) {
-				if (array[i] -= shiftValue < 'A') {
+				if (array[i] -= shiftValue < 'A')
+				{
 					array[i] += 26;
+				}
+				else
+				{
+					array[i] += shiftValue;
 				}
 			}
 			array[i] -= shiftValue;
@@ -144,4 +165,13 @@ string decryptMessage() {
 	}
 	
 	return decryptedMessage;
+}
+
+string getString(string message)
+{
+	cin.ignore();
+	string encryptOrDecrypt = "";
+	cout << message << endl;
+	getline(cin, encryptOrDecrypt);
+	return encryptOrDecrypt;
 }
