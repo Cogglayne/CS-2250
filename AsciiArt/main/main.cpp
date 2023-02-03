@@ -302,7 +302,7 @@ void drawDiamond(int sizeSelection)
 /*
 * Parameter:
 *  sizeSelection - how many stars to use when drawing the shape
-*  selection - what shape to draw
+*  shapeSelection - what shape to draw
 * Description:
 *  Draws a shape based on what shape and size the user choose
 */
