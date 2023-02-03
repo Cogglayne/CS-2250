@@ -34,12 +34,12 @@ void drawShape(int sizeSelection, int shapeSelection);
 */
 int main()
 {
+	int shapeSelection = 0; // used to allow the user to select a shape
+	int sizeSelection = 0; // used to allows the user to select a size for their shape
+
 	// outputs the initial greeting
 	cout << "Welcome to the shape renderer!" << endl;
 	cout << "You can draw a few different shapes at a variety of sizes!" << endl;
-
-	int shapeSelection = 0; // used to allow the user to select a shape
-	int sizeSelection = 0; // used to allows the user to select a size for their shape
 
 	// shape renderer will keep running until the user presses 6 to quit
 	while (true)
