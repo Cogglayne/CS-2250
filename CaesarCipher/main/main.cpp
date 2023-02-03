@@ -6,15 +6,15 @@ void showOptions();
 
 int selectOption();
 
-void encryptMessage(string message, int shiftValue);
+void encryptMessage(string& message, int shiftValue);
 
 int getShiftValue();
 
-void decryptMessage(string message, int shiftValue = 1);
+void decryptMessage(string& message, int shiftValue);
 
 string getString(string message);
 
-string bruteForce();
+void bruteForce(string message);
 
 /*
 * Return Value:
@@ -25,28 +25,36 @@ string bruteForce();
 */
 int main()
 {
-	int optionSelection = 0;
-	string message = "";
-	int shiftValue = 0;
+	int optionSelection = 0; // used to verify input validation
+	string message = ""; // used to the the string that is to be shifted
+	int shiftValue = 0; // used to get how much a string should be shifted by
+
 	// outputs the initial greeting
 	cout << "Welcome to the Tali-banned Encrypter!" << endl;
 	cout << "Make a selection from the menu and then follow the prompts." << endl;
 
+	// continues until option 4 is chosen 
 	while (true)
 	{
 		// shows the user the options they can select
 		showOptions();
+
+		// gets an option selection from the user
 		optionSelection = selectOption();
+
+		// calls encryption, decryption or brute force
 		switch (optionSelection)
 		{
 		case 1:
+			// encrypts a message and then outputs the encrypted message
 			message = getString("Please enter the message to encrypt:");
 			shiftValue = getShiftValue();
-			encryptMessage(message, shiftValue); // this can't be void change this to string and string return type
+			encryptMessage(message, shiftValue); 
 			cout << "Encrypted as:" << endl;
 			cout << message << endl;
 			break;
 		case 2:
+			//decrypts a message and outputs the decrypted message
 			message = getString("Please enter the message to decrypt:");
 			shiftValue = getShiftValue();
 			decryptMessage(message, shiftValue);
@@ -54,7 +62,9 @@ int main()
 			cout << message << endl;
 			break;
 		case 3:
-			message = bruteForce();
+			// outputs every possible decrypted version of an encrypted string
+			message = getString("Please enter the message to decrypt:");
+			bruteForce(message);
 			break;
 		}
 
@@ -62,7 +72,10 @@ int main()
 
 	return 0;
 }
-
+/*
+* Description:
+*  Shows the options a user can choose from
+*/
 void showOptions()
 {
 	cout << "*************************************" << endl;
@@ -72,12 +85,19 @@ void showOptions()
 	cout << "* 4 - Quit" << endl;
 	cout << "*************************************" << endl;
 }
-
+/*
+* Return Value:
+*  selection - the option the user chose
+*/
 int selectOption()
 {
-	int selection = 0;
-	bool notValidOption;
+	int selection = 0; // used to get an option selection 
+	bool notValidOption; // used to verify input
+
+	// outputs the available selections
 	cout << "Please make a menu selection (1-4):" << endl;
+
+	// continues until a valid selection is chosen
 	do
 	{
 		cin >> selection;
@@ -95,8 +115,9 @@ int selectOption()
 	}
 	return selection;
 }
-
-void encryptMessage(string message, int shiftValue)
+/*
+*/
+void encryptMessage(string& message, int shiftValue)
 {
 
 	unsigned char* array = (unsigned char*) &message[0];
@@ -118,7 +139,8 @@ void encryptMessage(string message, int shiftValue)
 
 	}
 }
-
+/*
+*/
 int getShiftValue()
 {
 
@@ -138,7 +160,7 @@ int getShiftValue()
 	return selection;
 }
 
-void decryptMessage(string message, int shiftValue) {
+void decryptMessage(string& message, int shiftValue) {
 
 	unsigned char* array = (unsigned char*)&message[0];
 
@@ -158,7 +180,8 @@ void decryptMessage(string message, int shiftValue) {
 		}
 	}
 }
-
+/*
+*/
 string getString(string message)
 {
 	cin.ignore();
@@ -167,40 +190,17 @@ string getString(string message)
 	getline(cin, encryptOrDecrypt);
 	return encryptOrDecrypt;
 }
-
-string bruteForce()
+/*
+*/
+void bruteForce(string message)
 {
-	int shiftValue = 0;
-	string decryptedMessage = "";
-	decryptedMessage = getString("Please enter the message to decrypt:");
 
-	unsigned char* array = (unsigned char*)&decryptedMessage[0];
 	cout << "Decrypted as:" << endl;
-
+	string originalMessage = message;
 	for (int i = 0; i < 25; i++)
 	{
-		if (isalpha(array[i]))
-		{
-			cout << array[i] << endl;
-			if (islower(array[i]))
-			{
-				cout << array[i] << endl;
-				if ((array[i] -= (i+1)) < 'a')
-				{
-					array[i] += 26;
-				}
-				cout << array[i] << endl;
-			}
-			else if (isupper(array[i]))
-			{
-				cout << array[i] << endl;
-				if ((array[i] -= (i+1)) < 'A')
-				{
-					array[i] += 26;
-				}
-				cout << array[i] << endl;
-			}
-		}
+		message = originalMessage;
+		decryptMessage(message, i + 1);
+		cout << message << endl;
 	}
-	return decryptedMessage;
 }
