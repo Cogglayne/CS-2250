@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
 void showOptions();
@@ -8,6 +9,10 @@ int selectOption();
 string encryptMessage();
 
 int getShiftValue();
+
+string decryptMessage();
+
+
 
 /*
 * Return Value:
@@ -27,7 +32,7 @@ int main()
 	// shows the user the options they can select
 	showOptions();
 	optionSelection = selectOption();
-	message = encryptMessage();
+	message = decryptMessage();
 	cout << message << endl;
 	return 0;
 }
@@ -63,32 +68,46 @@ int selectOption()
 string encryptMessage()
 {
 	int shiftValue = 0;
-	int messageToEncryptLength = 0;
-	string messageToEncrypt = "";
-
+	string encryptedMessage = "";
+	cin.ignore();
 
 	cout << "Please enter the message to encrypt:" << endl;
-	cin >> messageToEncrypt;
+	getline(cin, encryptedMessage);
 	shiftValue = getShiftValue();
 
-	string temp = "cat";
-	char tab2[1024];
-	strcpy(tab2, temp.c_str());
 
-	string temp = "cat";
-	char tab2[1024];
-	strncpy(tab2, temp.c_str(), sizeof(tab2));
-	tab2[sizeof(tab2) - 1] = 0;
+	char* array = &encryptedMessage[0];
+
+	for (int i = 0; i < encryptedMessage.length(); i++) {
+		if (isalpha(array[i])) {
+			if (islower(array[i])) {
+				if (array[i] += shiftValue > 'z') {
+
+					array[i] -= 26;
+				}
+			}
+			else if (isupper(array[i])) {
+				if (array[i] += shiftValue > 'Z') {
+					array[i] -= 26;
+				}
+			}
+			array[i] += shiftValue;
+
+		}
+
+	}
+	return encryptedMessage;
 }
 
 int getShiftValue()
 {
+
 	int selection = 0;
 	cout << "Please enter the shift value (1-25):" << endl;
 	bool notValidShiftValue;
-	cin.ignore();
 	do
 	{
+		;
 		cin >> selection;
 		notValidShiftValue = (selection <= 0 || selection >= 26);
 		if (notValidShiftValue)
@@ -97,4 +116,35 @@ int getShiftValue()
 		}
 	} while (notValidShiftValue);
 	return selection;
+}
+
+string decryptMessage() {
+	int shiftValue = 0;
+	string decryptedMessage = "";
+	cin.ignore();
+
+	cout << "Please enter the message to decrypt:" << endl;
+	getline(cin, decryptedMessage);
+	shiftValue = getShiftValue();
+
+	char* array = &decryptedMessage[0];
+
+	for (int i = 0; i < decryptedMessage.length(); i++) {
+		if (isalpha(array[i])) {
+			if (islower(array[i])) {
+				if (array[i] -= shiftValue < 'a'){
+
+					array[i] += 26;
+				}
+			}
+			else if (isupper(array[i])) {
+				if (array[i] -= shiftValue < 'A') {
+					array[i] += 26;
+				}
+			}
+			array[i] -= shiftValue;
+		}
+	}
+	
+	return decryptedMessage;
 }
