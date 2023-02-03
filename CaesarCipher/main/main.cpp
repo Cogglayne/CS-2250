@@ -82,7 +82,6 @@ string encryptMessage()
 		if (isalpha(array[i])) {
 			if (islower(array[i])) {
 				if (array[i] += shiftValue > 'z') {
-
 					array[i] -= 26;
 				}
 			}
@@ -92,7 +91,6 @@ string encryptMessage()
 				}
 			}
 			array[i] += shiftValue;
-
 		}
 
 	}
@@ -133,7 +131,6 @@ string decryptMessage() {
 		if (isalpha(array[i])) {
 			if (islower(array[i])) {
 				if (array[i] -= shiftValue < 'a'){
-
 					array[i] += 26;
 				}
 			}
