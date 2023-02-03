@@ -6,15 +6,15 @@ void showOptions();
 
 int selectOption();
 
-string encryptMessage();
+void encryptMessage(string message, int shiftValue);
 
 int getShiftValue();
 
-string decryptMessage();
+void decryptMessage(string message, int shiftValue = 1);
 
 string getString(string message);
 
-
+string bruteForce();
 
 /*
 * Return Value:
@@ -27,26 +27,39 @@ int main()
 {
 	int optionSelection = 0;
 	string message = "";
+	int shiftValue = 0;
 	// outputs the initial greeting
 	cout << "Welcome to the Tali-banned Encrypter!" << endl;
 	cout << "Make a selection from the menu and then follow the prompts." << endl;
 
-	// shows the user the options they can select
-	showOptions();
-	optionSelection = selectOption();
-	switch (optionSelection)
+	while (true)
 	{
-	case 1:
-		message = encryptMessage();
-		cout << "Encrypted as:" << endl;
-		cout << message << endl;
-		break;
-	case 2:
-		message = decryptMessage();
-		break;
-	case 3:
-		break;
+		// shows the user the options they can select
+		showOptions();
+		optionSelection = selectOption();
+		switch (optionSelection)
+		{
+		case 1:
+			message = getString("Please enter the message to encrypt:");
+			shiftValue = getShiftValue();
+			encryptMessage(message, shiftValue); // this can't be void change this to string and string return type
+			cout << "Encrypted as:" << endl;
+			cout << message << endl;
+			break;
+		case 2:
+			message = getString("Please enter the message to decrypt:");
+			shiftValue = getShiftValue();
+			decryptMessage(message, shiftValue);
+			cout << "Decrypted as:" << endl;
+			cout << message << endl;
+			break;
+		case 3:
+			message = bruteForce();
+			break;
+		}
+
 	}
+
 	return 0;
 }
 
@@ -83,16 +96,11 @@ int selectOption()
 	return selection;
 }
 
-string encryptMessage()
+void encryptMessage(string message, int shiftValue)
 {
-	int shiftValue = 0;
-	string encryptedMessage = "";
-	encryptedMessage = getString("Please enter the message to encrypt:");
-	shiftValue = getShiftValue();
 
-
-	unsigned char* array = (unsigned char*) & encryptedMessage[0];
-	for (int i = 0; i < encryptedMessage.length(); i++) {
+	unsigned char* array = (unsigned char*) &message[0];
+	for (int i = 0; i < message.length(); i++) {
 		if (isalpha(array[i])) {
 			if (islower(array[i])) {
 				if ((array[i] += shiftValue) > 'z')
@@ -109,7 +117,6 @@ string encryptMessage()
 		}
 
 	}
-	return encryptedMessage;
 }
 
 int getShiftValue()
@@ -131,40 +138,25 @@ int getShiftValue()
 	return selection;
 }
 
-string decryptMessage() {
-	int shiftValue = 0;
-	string decryptedMessage = "";
-	decryptedMessage = getString("Please enter the message to decrypt:");
-	shiftValue = getShiftValue();
+void decryptMessage(string message, int shiftValue) {
 
-	char* array = &decryptedMessage[0];
+	unsigned char* array = (unsigned char*)&message[0];
 
-	for (int i = 0; i < decryptedMessage.length(); i++) {
+	for (int i = 0; i < message.length(); i++) {
 		if (isalpha(array[i])) {
 			if (islower(array[i])) {
-				if (array[i] -= shiftValue < 'a'){
+				if ((array[i] -= shiftValue) < 'a'){
 					array[i] += 26;
-				}
-				else
-				{
-					array[i] += shiftValue;
 				}
 			}
 			else if (isupper(array[i])) {
-				if (array[i] -= shiftValue < 'A')
+				if ((array[i] -= shiftValue) < 'A')
 				{
 					array[i] += 26;
 				}
-				else
-				{
-					array[i] += shiftValue;
-				}
 			}
-			array[i] -= shiftValue;
 		}
 	}
-	
-	return decryptedMessage;
 }
 
 string getString(string message)
@@ -174,4 +166,41 @@ string getString(string message)
 	cout << message << endl;
 	getline(cin, encryptOrDecrypt);
 	return encryptOrDecrypt;
+}
+
+string bruteForce()
+{
+	int shiftValue = 0;
+	string decryptedMessage = "";
+	decryptedMessage = getString("Please enter the message to decrypt:");
+
+	unsigned char* array = (unsigned char*)&decryptedMessage[0];
+	cout << "Decrypted as:" << endl;
+
+	for (int i = 0; i < 25; i++)
+	{
+		if (isalpha(array[i]))
+		{
+			cout << array[i] << endl;
+			if (islower(array[i]))
+			{
+				cout << array[i] << endl;
+				if ((array[i] -= (i+1)) < 'a')
+				{
+					array[i] += 26;
+				}
+				cout << array[i] << endl;
+			}
+			else if (isupper(array[i]))
+			{
+				cout << array[i] << endl;
+				if ((array[i] -= (i+1)) < 'A')
+				{
+					array[i] += 26;
+				}
+				cout << array[i] << endl;
+			}
+		}
+	}
+	return decryptedMessage;
 }
