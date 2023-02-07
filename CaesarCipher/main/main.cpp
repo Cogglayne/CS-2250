@@ -4,13 +4,13 @@ using namespace std;
 
 void showOptions();
 
-int getValidInput(int max, int min, string message1, string message2);
+int getValidInput(int max, int min, string validInputsMessage, string errorMessage);
 
 void encryptMessage(string& message, int shiftValue);
 
 void decryptMessage(string& message, int shiftValue);
 
-string getMessage(string message);
+string getMessage(string userInstructionMessage);
 
 void bruteForceDecryption(string message);
 
@@ -19,7 +19,10 @@ void bruteForceDecryption(string message);
 *  0 if program ran successfull
 *  1 if it failed.
 * Description:
-*
+* This is the main function, execution
+* starts here. Initial prompts are presented to the user
+* after the user is given the opportunity to encrypt, decrypt,
+* quit, or brute force a message
 */
 int main()
 {
@@ -40,7 +43,7 @@ int main()
 		// gets an option selection from the user
 		optionSelection = getValidInput(4, 1, "Please make a menu selection (1-4):", "Invalid choice, Please make a menu selection (1-4):");
 
-		// calls encryption, decryption or brute force
+		// encrypts, decrypts, brute forces, or quits the program
 		switch (optionSelection)
 		{
 		case 1:
@@ -62,6 +65,7 @@ int main()
 		case 3:
 			// outputs every possible decrypted version of an encrypted string
 			message = getMessage("Please enter the message to decrypt:");
+			cout << "Decrypted as:" << endl;
 			bruteForceDecryption(message);
 			break;
 		case 4:
@@ -89,27 +93,37 @@ void showOptions()
 	cout << "*************************************" << endl;
 }
 /*
+* Parameter:
+* max - The maximum value for a valid input
+* min - The mininum value for a valid input
+* validInputsMessage - Shows what is considered a valid input
+* errorMessage - Error message if invalid input is entered
+* Return Value:
+* selection - The valid input gotten from the user.
 * Description:
 *  Shows the options a user can choose from
 */
-int getValidInput(int max, int min, string message1, string message2)
+int getValidInput(int max, int min, string validInputsMessage, string errorMessage)
 {
 	int selection = 0; // used to get an option selection 
 	bool notValid; // used to verify input
 
 	// outputs the available selections
-	cout << message1 << endl;
+	cout << validInputsMessage << endl;
 
 	// continues until a valid selection is chosen
 	do
 	{
+		// assigns the user's input to selection
 		cin >> selection;
+
+		// checks if the user's input is valid
 		notValid = (selection < min || selection > max);
 
-		// error message is outputed if user input is not valid
+		// an error message is outputed if the user's input is not valid
 		if (notValid)
 		{
-			cout << message2 << endl;
+			cout << errorMessage << endl;
 		}
 	} while (notValid);
 
@@ -117,32 +131,38 @@ int getValidInput(int max, int min, string message1, string message2)
 }
 
 /*
+* Parameter:
+* message = The message that the user wants to shift
+* shiftValue = How much to shift the message by
 * Description:
 * Shifts each letter in a string by a shift amount
 */
 void encryptMessage(string& message, int shiftValue)
 {
-	unsigned char* array = (unsigned char*)&message[0]; // assigns a char array to the first spot in the string to encrypt
+	unsigned char* messagePtr = (unsigned char*) &message[0]; // assigns a char array to the first spot in the string to encrypt
 
 	// shifts each char in the message up by a specified shift amount
-	// wraps the letter in the alphbet it it is greater than z or Z
 	for (int i = 0; i < message.length(); i++)
 	{
 		// checks if the char is a letter then if it is upper or lowercase
-		if (isalpha(array[i]))
+		if (isalpha(messagePtr[i]))
 		{
-			if (islower(array[i]))
+			if (islower(messagePtr[i]))
 			{
-				if ((array[i] += shiftValue) > 'z')
+				messagePtr[i] += shiftValue;
+				// wraps a lower case letter if shifting it made it above z
+				if (messagePtr[i] > 'z')
 				{
-					array[i] -= 26;
+					messagePtr[i] -= 26;
 				}
 			}
-			else if (isupper(array[i]))
+			else if (isupper(messagePtr[i]))
 			{
-				if ((array[i] += shiftValue) > 'Z')
+				messagePtr[i] += shiftValue;
+				// wraps an upper case letter if shifting it made it above Z
+				if (messagePtr[i] > 'Z')
 				{
-					array[i] -= 26;
+					messagePtr[i] -= 26;
 				}
 			}
 		}
@@ -151,69 +171,86 @@ void encryptMessage(string& message, int shiftValue)
 }
 
 /*
+* Parameter:
+* message = The message that the user wants to shift
+* shiftValue = How much to shift the message by
 * Description:
 * Shifts each letter in a string by a shift amount
 */
 void decryptMessage(string& message, int shiftValue)
 {
-	unsigned char* array = (unsigned char*)&message[0]; // assigns a char array to the first spot in the string to decrypt
+	unsigned char* messagePtr = (unsigned char*) &message[0]; // assigns a char array to the first spot in the string to decrypt
 
 	// shifts each char in the message down by a specified shift amount
-	// wraps the letter in the alphbet it it is less than a or A
 	for (int i = 0; i < message.length(); i++)
 	{
 		// checks if the char is a letter then if it is upper or lowercase
-		if (isalpha(array[i]))
+		if (isalpha(messagePtr[i]))
 		{
-			if (islower(array[i]))
+			if (islower(messagePtr[i]))
 			{
-				if ((array[i] -= shiftValue) < 'a')
+				messagePtr[i] -= shiftValue;
+				// wraps a lower case letter if shifting it made it below a
+				if (messagePtr[i] < 'a')
 				{
-					array[i] += 26;
+					messagePtr[i] += 26;
 				}
 			}
-			else if (isupper(array[i]))
+			else if (isupper(messagePtr[i]))
 			{
-				if ((array[i] -= shiftValue) < 'A')
+				messagePtr[i] -= shiftValue;
+				// wraps an upper case letter if shifting it made it below A
+				if (messagePtr[i] < 'A')
 				{
-					array[i] += 26;
+					messagePtr[i] += 26;
 				}
 			}
 		}
 	}
 }
 /*
+* Parameter:
+* userInstructionMessage - Tells the user to input a string for encryption or decryption
+* Return Value:
+* message - The message the user wants to encrypt or decrypt
 * Description:
 * Gets a message from the user and then returns it
 */
-string getMessage(string message)
+string getMessage(string userInstructionMessage)
 {
+	string message = ""; // used to get a message from the user
+	
 	// ignores previous cin to prevent issues with using cin then getline 
 	cin.ignore();
 
-	// gets a message from the user
-	string encryptOrDecrypt = "";
-	cout << message << endl;
-	getline(cin, encryptOrDecrypt);
+	// tells the user to enter a message to encrypt or decrypt
+	cout << userInstructionMessage << endl;
 
-	return encryptOrDecrypt;
+	// gets a message from the user
+	getline(cin, message);
+
+	return message;
 }
 /*
+* Parameter:
+* message = The message that the user wants to shift
 * Description:
 * Decrypts an encrypted message using brute force
 */
 void bruteForceDecryption(string message)
 {
-
-	cout << "Decrypted as:" << endl;
-
 	string originalMessage = message; // stores the original string so every iteration shifts the original string
 
 	// decrypts the messsage with every possible shift value
 	for (int i = 0; i < 25; i++)
 	{
+		// resets the message to the original message
 		message = originalMessage;
+
+		// calls decreypt message with the current shift value
 		decryptMessage(message, i + 1);
+
+		// outputs the message shifted by each shift value
 		cout << message << endl;
 	}
 }
