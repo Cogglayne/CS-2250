@@ -4,15 +4,14 @@ using namespace std;
 
 /*
 * Return Value:
-* int – value of 0 means that everything
+* 0 means that everything
 * has gone ok, value of 1 means
 * that something bad has happened
-
 * Description:
-*  This is the main function, execution
-*  starts here. A weapon is is loaded twice,
-*  fired until there is not ammo left, and then
-*  fired one last time when it is empty
+* This is the main function, execution
+* starts here. Tests the creation of 
+* and firing of weapons with different names
+* and different ammo ammounts.
 */
 int main()
 {
