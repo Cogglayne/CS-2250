@@ -52,7 +52,6 @@ void Trophy::print()
 {
 	switch (getColor())
 	{
-
 	case 0:
 		cout << "[ " << getName() << " : " << getLevel() << " : " << "GOLD" << " ]" << endl;
 		break;

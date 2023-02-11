@@ -125,11 +125,8 @@ vector<Trophy> deleteTrophy(vector<Trophy> trophies)
 	int index = searchForTrophy(trophies, name);
 	if (index != -1)
 	{
-
-			cout << trophies.size() << endl;
 			trophies[index] = trophies.back();
 			trophies.pop_back();
-			cout << trophies.size() << endl;
 
 	}
 	// TODO: Find the trophy and if it exists, erase it to the vector
@@ -141,9 +138,17 @@ vector<Trophy> deleteTrophy(vector<Trophy> trophies)
 // Copy an existing Trophy in the collection
 vector<Trophy> copyTrophy(vector<Trophy> trophies)
 {
+	Trophy trophy;
 	cout << "You have chosen to copy an existing trophy." << endl;
 	string name = promptForString(PROMPT_FOR_NAME);
-	// TODO: Find the trophy and if it exists, copy it and add the copy to the vector
+	int index = searchForTrophy(trophies, name);
+	if (index != -1)
+	{
+		trophy.setName(trophies[index].getName());
+		trophy.setLevel(trophies[index].getLevel());
+		trophy.setColor(trophies[index].getColor());
+		trophies.push_back(trophy);
+	}
 	return trophies;
 }
 
