@@ -4,6 +4,8 @@ using namespace std;
 
 void showOptions();
 
+int runEncrypter(int optionSelection, string message, int shiftValue);
+
 int getValidInput(int max, int min, string validInputsMessage, string errorMessage);
 
 void encryptMessage(string& message, int shiftValue);
@@ -29,13 +31,13 @@ int main()
 	int optionSelection = 0; // used to verify input validation
 	string message = ""; // used to the the string that is to be shifted
 	int shiftValue = 0; // used to get how much a string should be shifted by
+	int quitOrContinue = 0; // used to determine if the application should continue
 
 	// outputs the initial greeting
 	cout << "Welcome to the Tali-banned Encrypter!" << endl;
 	cout << "Make a selection from the menu and then follow the prompts." << endl;
 
-	// continues until option 4 is chosen 
-	while (true)
+	do
 	{
 		// shows the user the options they can select
 		showOptions();
@@ -43,41 +45,62 @@ int main()
 		// gets an option selection from the user
 		optionSelection = getValidInput(4, 1, "Please make a menu selection (1-4):", "Invalid choice, Please make a menu selection (1-4):");
 
-		// encrypts, decrypts, brute forces, or quits the program
-		switch (optionSelection)
-		{
-		case 1:
-			// encrypts a message and then outputs the encrypted message
-			message = getMessage("Please enter the message to encrypt:");
-			shiftValue = getValidInput(25, 1, "Please enter the shift value (1-25):", "Invalid choice, Please enter the shift value (1-25):");
-			encryptMessage(message, shiftValue);
-			cout << "Encrypted as:" << endl;
-			cout << message << endl;
-			break;
-		case 2:
-			//decrypts a message and outputs the decrypted message
-			message = getMessage("Please enter the message to decrypt:");
-			shiftValue = getValidInput(25, 1, "Please enter the shift value (1-25):", "Invalid choice, Please enter the shift value (1-25):");
-			decryptMessage(message, shiftValue);
-			cout << "Decrypted as:" << endl;
-			cout << message << endl;
-			break;
-		case 3:
-			// outputs every possible decrypted version of an encrypted string
-			message = getMessage("Please enter the message to decrypt:");
-			cout << "Decrypted as:" << endl;
-			bruteForceDecryption(message);
-			break;
-		case 4:
-			// exits the program
-			cout << "Thank you Caesar!  See ya!" << endl;
-			exit(0);
-			break;
-		}
+		// returns either 0 or 1, 1 continues the loop and 0 breaks it.
+		quitOrContinue = runEncrypter(optionSelection, message, shiftValue);
 
-	}
+	} while (quitOrContinue != 0);
 
 	return 0;
+}
+/*
+* Parameter:
+* optionSelection - The users choice of the 4 available options
+* message - the message the user wants to shift
+* shiftValue - how much the user wants to shift the message by
+* Return Value:
+* 0 exits the application
+* 1 continues the application
+* Description:
+* Runs the encrypter application
+*/
+int runEncrypter(int optionSelection, string message, int shiftValue)
+{
+	// encrypts, decrypts, brute forces, or quits the program
+	switch (optionSelection)
+	{
+	case 1:
+		// encrypts a message and then outputs the encrypted message
+		message = getMessage("Please enter the message to encrypt:");
+		shiftValue = getValidInput(25, 1, "Please enter the shift value (1-25):", "Invalid choice, Please enter the shift value (1-25):");
+		encryptMessage(message, shiftValue);
+		cout << "Encrypted as:" << endl;
+		cout << message << endl;
+		return 1;
+		break;
+	case 2:
+		//decrypts a message and outputs the decrypted message
+		message = getMessage("Please enter the message to decrypt:");
+		shiftValue = getValidInput(25, 1, "Please enter the shift value (1-25):", "Invalid choice, Please enter the shift value (1-25):");
+		decryptMessage(message, shiftValue);
+		cout << "Decrypted as:" << endl;
+		cout << message << endl;
+		return 1;
+		break;
+	case 3:
+		// outputs every possible decrypted version of an encrypted string
+		message = getMessage("Please enter the message to decrypt:");
+		cout << "Decrypted as:" << endl;
+		bruteForceDecryption(message);
+		return 1;
+		break;
+	case 4:
+		// exits the program
+		cout << "Thank you Caesar!  See ya!" << endl;
+		return 0;
+		break;
+	default:
+		return 1;
+	}
 }
 /*
 * Description:
