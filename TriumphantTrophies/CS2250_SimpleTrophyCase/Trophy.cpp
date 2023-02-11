@@ -8,7 +8,7 @@ Trophy::Trophy()
 {
 	name = "";
 	level = 0;
-	color = Color::BRONZE;
+	color = Color::EMPTYCOLOR;
 }
 
 Trophy::Trophy(string newName, int newLevel, Color newColor)

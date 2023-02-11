@@ -6,7 +6,8 @@ enum Color
 {
 	GOLD,
 	SILVER,
-	BRONZE
+	BRONZE,
+	EMPTYCOLOR
 };		
 
 class Trophy 
