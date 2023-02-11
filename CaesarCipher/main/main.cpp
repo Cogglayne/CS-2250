@@ -4,7 +4,7 @@ using namespace std;
 
 void showOptions();
 
-int runEncrypter(int optionSelection, string message, int shiftValue);
+void runEncrypter(int optionSelection);
 
 int getValidInput(int max, int min, string validInputsMessage, string errorMessage);
 
@@ -12,7 +12,7 @@ void encryptMessage(string& message, int shiftValue);
 
 void decryptMessage(string& message, int shiftValue);
 
-string getMessage(string userInstructionMessage);
+string getMessage(string instructionMessage);
 
 void bruteForceDecryption(string message);
 
@@ -28,15 +28,13 @@ void bruteForceDecryption(string message);
 */
 int main()
 {
-	int optionSelection = 0; // used to verify input validation
-	string message = ""; // used to the the string that is to be shifted
-	int shiftValue = 0; // used to get how much a string should be shifted by
-	int quitOrContinue = 0; // used to determine if the application should continue
+	int optionSelection = 0; // used to get the option the user wants
 
 	// outputs the initial greeting
 	cout << "Welcome to the Tali-banned Encrypter!" << endl;
 	cout << "Make a selection from the menu and then follow the prompts." << endl;
 
+	// loops runs until the user chooses option 4
 	do
 	{
 		// shows the user the options they can select
@@ -45,26 +43,24 @@ int main()
 		// gets an option selection from the user
 		optionSelection = getValidInput(4, 1, "Please make a menu selection (1-4):", "Invalid choice, Please make a menu selection (1-4):");
 
-		// returns either 0 or 1, 1 continues the loop and 0 breaks it.
-		quitOrContinue = runEncrypter(optionSelection, message, shiftValue);
+		// runs the encrypter based on the option selected
+		runEncrypter(optionSelection);
 
-	} while (quitOrContinue != 0);
+	} while (optionSelection != 4);
 
 	return 0;
 }
 /*
 * Parameter:
-* optionSelection - The users choice of the 4 available options
-* message - the message the user wants to shift
-* shiftValue - how much the user wants to shift the message by
-* Return Value:
-* 0 exits the application
-* 1 continues the application
+* optionSelection - The user's choice of the 4 available optionsc
 * Description:
 * Runs the encrypter application
 */
-int runEncrypter(int optionSelection, string message, int shiftValue)
+void runEncrypter(int optionSelection)
 {
+	string message = ""; // used to the the string that is to be shifted
+	int shiftValue = 0; // used to get how much a string should be shifted by
+
 	// encrypts, decrypts, brute forces, or quits the program
 	switch (optionSelection)
 	{
@@ -75,7 +71,6 @@ int runEncrypter(int optionSelection, string message, int shiftValue)
 		encryptMessage(message, shiftValue);
 		cout << "Encrypted as:" << endl;
 		cout << message << endl;
-		return 1;
 		break;
 	case 2:
 		//decrypts a message and outputs the decrypted message
@@ -84,22 +79,17 @@ int runEncrypter(int optionSelection, string message, int shiftValue)
 		decryptMessage(message, shiftValue);
 		cout << "Decrypted as:" << endl;
 		cout << message << endl;
-		return 1;
 		break;
 	case 3:
 		// outputs every possible decrypted version of an encrypted string
 		message = getMessage("Please enter the message to decrypt:");
 		cout << "Decrypted as:" << endl;
 		bruteForceDecryption(message);
-		return 1;
 		break;
 	case 4:
 		// exits the program
 		cout << "Thank you Caesar!  See ya!" << endl;
-		return 0;
 		break;
-	default:
-		return 1;
 	}
 }
 /*
@@ -233,13 +223,13 @@ void decryptMessage(string& message, int shiftValue)
 }
 /*
 * Parameter:
-* userInstructionMessage - Tells the user to input a string for encryption or decryption
+* instructionMessage - Tells the user to input a string for encryption or decryption
 * Return Value:
 * message - The message the user wants to encrypt or decrypt
 * Description:
 * Gets a message from the user and then returns it
 */
-string getMessage(string userInstructionMessage)
+string getMessage(string instructionMessage)
 {
 	string message = ""; // used to get a message from the user
 	
@@ -247,7 +237,7 @@ string getMessage(string userInstructionMessage)
 	cin.ignore();
 
 	// tells the user to enter a message to encrypt or decrypt
-	cout << userInstructionMessage << endl;
+	cout << instructionMessage << endl;
 
 	// gets a message from the user
 	getline(cin, message);
