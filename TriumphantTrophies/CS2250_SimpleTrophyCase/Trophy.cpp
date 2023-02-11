@@ -50,5 +50,18 @@ void Trophy::setColor(Color newColor)
 
 void Trophy::print()
 {
-	cout << getName() << " : " << getLevel() << " : " << getColor() << " : " << endl;
+	switch (getColor())
+	{
+
+	case 0:
+		cout << "[ " << getName() << " : " << getLevel() << " : " << "GOLD" << " ]" << endl;
+		break;
+	case 1:
+		cout << "[ " << getName() << " : " << getLevel() << " : " << "SILVER" << " ]" << endl;
+		break;
+	case 2:
+		cout << "[ " << getName() << " : " << getLevel() << " : " << "BRONZE" << " ]" << endl;
+		break;
+	}
+
 }
