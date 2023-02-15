@@ -256,9 +256,9 @@ int promptForInt(const string& message, int minimum, int maximum)
 // user's entered color to the official color)
 string stringToUpper(string value)
 {
-	for (int i = 0; i < value.length(); i++)
+	for (int index = 0; index < value.length(); index++)
 	{
-		value[i] = toupper(value[i]);
+		value[index] = toupper(value[index]);
 	}
 	return value;
 }
