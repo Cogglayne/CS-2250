@@ -48,6 +48,7 @@ int main()
 	do
 	{
 		input = printMenu();
+
 		switch (input)
 		{
 		case 1:		// Add a new Trophy
@@ -60,7 +61,7 @@ int main()
 			deleteTrophy(trophies);
 			break;
 		case 4:		// Rename a Trophy
-			 renameTrophy(trophies);
+			renameTrophy(trophies);
 			break;
 		case 5:		// Change the level of a Trophy
 			relevelTrophy(trophies);
@@ -88,6 +89,7 @@ int main()
 int printMenu()
 {
 	int input;
+
 	cout << "-----------------------------------------" << endl
 		<< "Please select an option :" << endl
 		<< "1 - Add a new Trophy" << endl
@@ -99,8 +101,11 @@ int printMenu()
 		<< "7 - Print All the Trophies" << endl
 		<< "8 - Exit the program" << endl
 		<< "-----------------------------------------" << endl;
+
 	cin >> input;
+
 	cin.ignore();
+
 	return input;
 }
 
@@ -108,7 +113,11 @@ int printMenu()
 void addTrophy(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to add a trophy." << endl;
+
+	// has the user create a trophy
 	Trophy trophy = promptForTrophy();
+
+	// adds the trophy to the back of the vector
 	trophies.push_back(trophy);
 }
 
@@ -116,29 +125,32 @@ void addTrophy(vector<Trophy>& trophies)
 void deleteTrophy(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to delete an existing trophy." << endl;
+
+	// gets the name of the trophy the user wants to delte
 	string name = promptForString(PROMPT_FOR_NAME);
 
 	// Create a pointer to the first item in the vector
-	vector<Trophy>::iterator it = trophies.begin();
+	vector<Trophy>::iterator trophiesIterator = trophies.begin();
 
-	// While we haven't found a negative number
-	// and not at the end of the vector
 	// Search down the vector
-	while (it != trophies.end())
+	while (trophiesIterator != trophies.end())
 	{
-		// Move to the next item in the vector
-		if (it->getName() == name)
+		// breaks if the current trophy has a name that matches
+		// the trophy the user wants to delete
+		if (trophiesIterator->getName() == name)
 		{
 			break;
 		}
-		++it;
+
+		// Move to the next item in the vector
+		trophiesIterator++;
 	}
 
 	// If we're not at the end of the vector (i.e. our iterator is pointing to a valid object)
-	if (it != trophies.end())
+	if (trophiesIterator != trophies.end())
 	{
 		// Erase the object that the iterator is pointing to
-		trophies.erase(it);
+		trophies.erase(trophiesIterator);
 	}
 
 }
@@ -146,9 +158,15 @@ void deleteTrophy(vector<Trophy>& trophies)
 // Copy an existing Trophy in the collection
 void copyTrophy(vector<Trophy>& trophies)
 {
-	Trophy trophy;
+	Trophy trophy; // initializes a trophy 
+
 	cout << "You have chosen to copy an existing trophy." << endl;
+
+	// gets the name of the trophy the user wants to copy
 	string name = promptForString(PROMPT_FOR_NAME);
+
+	// searches for the trophy and if it exists copies the trophy
+	// the copied trophy is then added to the back of the vector
 	int index = searchForTrophy(trophies, name);
 	if (index != -1)
 	{
@@ -163,8 +181,14 @@ void copyTrophy(vector<Trophy>& trophies)
 void renameTrophy(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to rename an existing trophy." << endl;
+
+	// gets the name of the trophy the user wants to rename
 	string name = promptForString(PROMPT_FOR_NAME);
+
+	// gets the name that the user wants to change the trophy's name to
 	string newName = promptForString("Please enter the new name of the Trophy");
+
+	// searches for the trophy and if it exists renames the trophy
 	int index = searchForTrophy(trophies, name);
 	if (index != -1)
 	{
@@ -176,8 +200,14 @@ void renameTrophy(vector<Trophy>& trophies)
 void relevelTrophy(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to change the level of an existing trophy." << endl;
+
+	// gets the name of the trophy the user wants to relevel
 	string name = promptForString(PROMPT_FOR_NAME);
-	int level = promptForInt(PROMPT_FOR_LEVEL,1,10);
+
+	// gets the level that the user wants to change the trophy's level to
+	int level = promptForInt(PROMPT_FOR_LEVEL, 1, 10);
+
+	// searches for the trophy and if it exists relevels the trophy
 	int index = searchForTrophy(trophies, name);
 	if (index != -1)
 	{
@@ -189,9 +219,15 @@ void relevelTrophy(vector<Trophy>& trophies)
 void recolorTrophy(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to change the color of an existing trophy." << endl;
+
+	// gets the name of the trophy the user wants to recolor
 	string name = promptForString(PROMPT_FOR_NAME);
+
+	// gets the color that the user wants to change the trophy's color to
 	Color color = promptForColor(PROMPT_FOR_COLOR);
-	int index = searchForTrophy(trophies,name);
+
+	// searches for the trophy and if it exists recolors the trophy
+	int index = searchForTrophy(trophies, name);
 	if (index != -1)
 	{
 		trophies[index].setColor(color);
@@ -203,6 +239,7 @@ void printTrophies(vector<Trophy>& trophies)
 {
 	cout << "You have chosen to print all of the trophies." << endl;
 
+	// loops through the vector and calls the print method on every trophy
 	for (int index = 0; index < trophies.size(); index++)
 	{
 		trophies[index].print();
@@ -213,10 +250,14 @@ void printTrophies(vector<Trophy>& trophies)
 // Return the Trophy
 Trophy promptForTrophy()
 {
+	// gets the name, level, and color of a trophy
 	string name = promptForString(PROMPT_FOR_NAME);
 	int level = promptForInt(PROMPT_FOR_LEVEL, 1, 10);
 	Color color = promptForColor(PROMPT_FOR_COLOR);
+
+	// creates a trophy using input gathered above
 	Trophy trophy(name, level, color);
+
 	return trophy;
 }
 
@@ -224,14 +265,22 @@ Trophy promptForTrophy()
 // Return the string
 string promptForString(const string& message)
 {
-	string value = "";
+	string value = ""; // used to get a string from the user
+
+	// outputs what the user should enter
 	cout << message << endl;
+
+	// reads in a string from the user
 	getline(cin, value);
+
+	// while the string is empty an error message is outputed and
+	// the user is prompted for another string
 	while (value.empty())
 	{
 		cout << "That is not a valid name.  Try again.";
 		getline(cin, value);
 	}
+
 	return value;
 }
 
@@ -240,15 +289,24 @@ string promptForString(const string& message)
 // Return the int
 int promptForInt(const string& message, int minimum, int maximum)
 {
-	int value = 0;
+	int value = 0; // used to get an int from the user
+
+	// outputs the valid range for the int
 	cout << message << endl;
+
+	// reads in an int from the user
 	cin >> value;
+
+	// while the value entered is above the maximum or below the maximum
+	// an error message is outputed and the user is asked to input another number
 	while (value < minimum || value > maximum)
 	{
 		cout << "That value is outside the acceptable range.  Try again." << endl;
 		cin >> value;
 	}
+
 	cin.ignore();
+
 	return value;
 }
 
@@ -256,10 +314,12 @@ int promptForInt(const string& message, int minimum, int maximum)
 // user's entered color to the official color)
 string stringToUpper(string value)
 {
+	// loops through the length of a string and uppercases each letter in the string
 	for (int index = 0; index < value.length(); index++)
 	{
 		value[index] = toupper(value[index]);
 	}
+
 	return value;
 }
 
@@ -267,44 +327,61 @@ string stringToUpper(string value)
 // Return the color
 Color promptForColor(const string& message)
 {
-	Color color = Color::EMPTYCOLOR;
-	string value;
+	Color color = Color::Default; // used to get a color from the user
+	string value = ""; // used to get a color from the user
+
+	// outputs the acceptable colors the user can input
 	cout << message << endl;
 
-	while (color == EMPTYCOLOR)
+	// while the color is the default color the loop will continue
+	while (color == Default)
 	{
+		// gets a string from the user and then uppercases it
 		cin >> value;
 		value = stringToUpper(value);
+
 		if (value == "GOLD")
 		{
+			// sets the color to gold
 			color = Color::GOLD;
 		}
 		else if (value == "SILVER")
 		{
+			// sets the color to silver
 			color = Color::SILVER;
 		}
 		else if (value == "BRONZE")
 		{
+			// sets the color to bronze
 			color = Color::BRONZE;
-		}else
+		}
+		else
 		{
+			// outputs an error and asks the user to input another color
 			cout << "That is not an acceptable color.  Try again." << endl;
 		}
 	}
+
 	cin.ignore();
+
 	return color;
 }
 
 // Search for a trophy in the collection by name
 int searchForTrophy(vector<Trophy> trophies, string trophyName)
 {
+	// loops through a vector to find a trophy
 	for (int index = 0; index < trophies.size(); index++)
 	{
+		// returns the first trophy that matches the name that is being searched for
 		if (trophies[index].getName() == trophyName)
 		{
 			return index;
 		}
 	}
+
+	// an error message is outputed and -1 is returned if the 
+	// trophy was not found
 	cout << "ERROR: The Trophy was not found" << endl;
 	return -1;
 }

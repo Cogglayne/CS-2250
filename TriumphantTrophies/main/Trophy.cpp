@@ -3,14 +3,23 @@
 #include <iostream>
 using namespace std;
 
+// all colors have the same three acceptable colors
+string Trophy::colors[3] = { "GOLD","SILVER","BRONZE" };
 
+/*
+* Default constructor for a trophy
+*/
 Trophy::Trophy()
 {
 	name = "";
 	level = 0;
-	color = Color::EMPTYCOLOR;
+	color = Color::Default;
 }
 
+/*
+* Trophy constructor with parameters for the trophy's name,
+* level, and color.
+*/
 Trophy::Trophy(string newName, int newLevel, Color newColor)
 {
 	name = newName;
@@ -18,49 +27,58 @@ Trophy::Trophy(string newName, int newLevel, Color newColor)
 	color = newColor;
 }
 
+/*
+* Gets the name of the trophy
+*/
 string Trophy::getName() const
 {
 	return name;
 }
 
+/*
+* Gets the level of the trophy
+*/
 int Trophy::getLevel() const
 {
 	return level;
 }
 
+/*
+* Gets the color of the trophy
+*/
 Color Trophy::getColor() const
 {
 	return color;
 }
 
+/*
+* Sets the name of the trophy
+*/
 void Trophy::setName(string newName)
 {
 	name = newName;
 }
 
+/*
+* Sets the level of the trophy
+*/
 void Trophy::setLevel(int newLevel)
 {
 	level = newLevel;
 }
 
+/*
+* Sets the color of the trophy
+*/
 void Trophy::setColor(Color newColor)
 {
 	color = newColor;
 }
 
+/*
+* Outputs the name, level, and color of a trophy
+*/
 void Trophy::print()
 {
-	switch (getColor())
-	{
-	case 0:
-		cout << "[ " << getName() << " : " << getLevel() << " : " << "GOLD" << " ]" << endl;
-		break;
-	case 1:
-		cout << "[ " << getName() << " : " << getLevel() << " : " << "SILVER" << " ]" << endl;
-		break;
-	case 2:
-		cout << "[ " << getName() << " : " << getLevel() << " : " << "BRONZE" << " ]" << endl;
-		break;
-	}
-
+	cout << "[ " << getName() << " : " << getLevel() << " : " << colors[getColor()] << " ]" << endl;
 }

@@ -1,18 +1,27 @@
 #include <string>
 using namespace std;
+
 #ifndef TROPHY_H
 #define TROPHY_H
-enum Color 
+
+/*
+* An enum of colors
+*/
+enum Color
 {
 	GOLD,
 	SILVER,
 	BRONZE,
-	EMPTYCOLOR
-};		
+	Default
+};
 
-class Trophy 
+/*
+* A trophy
+*/
+class Trophy
 {
 public:
+	// method prototypes
 	Trophy();
 	Trophy(string newName, int newLevel, Color newColor);
 	string getName() const;
@@ -23,10 +32,11 @@ public:
 	void setColor(Color newColor);
 	void print();
 private:
+	// variables
 	Color color;
 	string name;
 	int level;
-};	
-
+	static string colors[];
+};
 
 #endif
