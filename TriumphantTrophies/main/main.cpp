@@ -327,14 +327,14 @@ string stringToUpper(string value)
 // Return the color
 Color promptForColor(const string& message)
 {
-	Color color = Color::Default; // used to get a color from the user
+	Color color = Color::DEFAULT; // used to get a color from the user
 	string value = ""; // used to get a color from the user
 
 	// outputs the acceptable colors the user can input
 	cout << message << endl;
 
 	// while the color is the default color the loop will continue
-	while (color == Default)
+	while (color == DEFAULT)
 	{
 		// gets a string from the user and then uppercases it
 		cin >> value;

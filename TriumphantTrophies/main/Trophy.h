@@ -9,10 +9,10 @@ using namespace std;
 */
 enum Color
 {
-	GOLD,
-	SILVER,
+	DEFAULT,
 	BRONZE,
-	Default
+	SILVER,
+	GOLD,
 };
 
 /*

@@ -3,8 +3,8 @@
 #include <iostream>
 using namespace std;
 
-// all colors have the same three acceptable colors
-string Trophy::colors[3] = { "GOLD","SILVER","BRONZE" };
+// all colors have the same options for colors
+string Trophy::colors[4] = { "DEFAULT","BRONZE","SILVER","GOLD" };
 
 /*
 * Default constructor for a trophy
@@ -13,7 +13,7 @@ Trophy::Trophy()
 {
 	name = "";
 	level = 0;
-	color = Color::Default;
+	color = Color::DEFAULT;
 }
 
 /*
