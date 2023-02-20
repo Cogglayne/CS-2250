@@ -156,7 +156,13 @@ void deleteTrophy(vector<Trophy*>& trophies)
 	// If we're not at the end of the vector (i.e. our iterator is pointing to a valid object)
 	if (trophiesIterator != trophies.end())
 	{
-		// Erase the object that the iterator is pointing to
+		// delete the pointer's memory
+		delete* trophiesIterator;
+
+		// set the pointer to null pointer
+		*trophiesIterator = nullptr;
+
+		// erase the trophy from the vector
 		trophies.erase(trophiesIterator);
 	}
 
