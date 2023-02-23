@@ -8,7 +8,7 @@ class Shape
 {
 public:
 	Shape(string newName);
-	void draw();
+	virtual void draw();
 private:
 	string name;
 };

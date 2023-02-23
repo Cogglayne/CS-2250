@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-class Rectangle : Shape
+class Rectangle : public Shape
 {
 public:
 	Rectangle(string newName, int newHeight, int newWidth);
