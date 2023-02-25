@@ -1,0 +1,63 @@
+1
+6
+1
+Trophy 2
+16
+SILVER
+6
+1
+Trophy 10
+24
+BRONZE
+6
+1
+Trophy 3
+17
+GOLD
+6
+1
+Trophy 1
+15
+BRONZE
+6
+1
+Trophy 6
+20
+GOLD
+6
+1
+Trophy 7
+21
+BRONZE
+6
+1
+Trophy 8
+22
+SILVER
+6
+1
+Trophy 4
+18
+BRONZE
+6
+1
+Trophy 9
+23
+GOLD
+6
+1
+Trophy 5
+19
+SILVER
+5
+7
+1
+Trophy 10
+7
+1
+Trophy 1
+7
+1
+Trophy 5
+5
+12

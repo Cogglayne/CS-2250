@@ -1,0 +1,126 @@
+1
+6
+1
+Trophy 10
+24
+BRONZE
+6
+1
+Trophy 3
+17
+GOLD
+6
+1
+Trophy 13
+17
+SILVER
+6
+1
+Trophy 20
+19
+SILVER
+6
+1
+Trophy 1
+15
+BRONZE
+6
+1
+Trophy 16
+21
+BRONZE
+2
+1
+6
+2
+Trophy 4
+18
+BRONZE
+6
+2
+Trophy 9
+23
+GOLD
+6
+2
+Trophy 19
+23
+GOLD
+6
+2
+Trophy 5
+19
+SILVER
+6
+2
+Trophy 11
+16
+BRONZE
+6
+2
+Trophy 8
+22
+SILVER
+6
+2
+Trophy 14
+15
+SILVER
+6
+2
+Trophy 15
+20
+BRONZE
+6
+2
+Trophy 2
+16
+SILVER
+7
+1
+Trophy 20
+7
+2
+Trophy 6
+8
+1
+Trophy 13
+8
+1
+Trophy 10
+8
+2
+Trophy 3
+8
+2
+Trophy 4
+8
+2
+Trophy 9
+8
+2
+Trophy 11
+9
+1
+Trophy 20
+New Trophy 20
+9
+2
+Trophy 14
+New Trophy 14
+9
+2
+Trophy 5
+New Trophy 20
+9
+2
+Trophy 20
+Another Trophy 20
+5
+4
+1
+5
+4
+1
+5
+12
