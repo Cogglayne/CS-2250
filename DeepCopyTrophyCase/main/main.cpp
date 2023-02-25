@@ -88,8 +88,8 @@ int main()
 // Print the menu to the user and accept their menu choice
 int printMenu()
 {
-	string stringInput = "";
-	int intInput = 0;
+	string stringInput = ""; // used to get input from the user
+	int intInput = 0;  // used to store the int from converting string input
 
 	cout << "-----------------------------------------" << endl
 		<< "Please select an option :" << endl
@@ -105,12 +105,14 @@ int printMenu()
 
 	try
 	{
+		// gets input and then converts it to an int
 		getline(cin, stringInput);
 		intInput = stoi(stringInput);
 	}
 	catch (exception& ex)
 	{
-		return 9;
+		// sets int input to 9
+		intInput = 9;
 	}
 
 	return intInput;
@@ -142,30 +144,24 @@ void deleteTrophy(vector<Trophy*>& trophies)
 	// Search down the vector
 	while (trophiesIterator != trophies.end())
 	{
-		// breaks if the current trophy has a name that matches
-		// the trophy the user wants to delete
+		// checks if the current trophy is the one the user wants to delete
 		if ((*trophiesIterator)->getName() == name)
 		{
+			// delete the pointer's memory
+			delete* trophiesIterator;
+
+			// set the pointer to null pointer
+			*trophiesIterator = nullptr;
+
+			// erase the trophy from the vector
+			trophies.erase(trophiesIterator);
+
 			break;
 		}
 
 		// Move to the next item in the vector
 		trophiesIterator++;
 	}
-
-	// If we're not at the end of the vector (i.e. our iterator is pointing to a valid object)
-	if (trophiesIterator != trophies.end())
-	{
-		// delete the pointer's memory
-		delete* trophiesIterator;
-
-		// set the pointer to null pointer
-		*trophiesIterator = nullptr;
-
-		// erase the trophy from the vector
-		trophies.erase(trophiesIterator);
-	}
-
 }
 
 // Copy an existing Trophy in the collection
@@ -299,33 +295,33 @@ string promptForString(const string& message)
 int promptForInt(const string& message, int minimum, int maximum)
 {
 	string stringInput = ""; // used to get an int from the user
-	int intInput = 0;
+	int intInput = 0; // used to store the int from converting string input
 
 	// outputs the valid range for the int
 	cout << message << endl;
 
-	try
-	{
-		// reads in an int from the user
-		getline(cin, stringInput);
-		intInput = stoi(stringInput);
-	}
-	catch (exception& ex)
-	{
-		intInput = minimum - 1;
-	}
-	// while the value entered is above the maximum or below the maximum
-	// an error message is outputed and the user is asked to input another number
+	// gets input from the user until they input a valid option
 	while (intInput < minimum || intInput > maximum)
 	{
 		try
 		{
+			// gets input from the user and then converts it to an int
+			getline(cin, stringInput);
+			intInput = stoi(stringInput);
+
+			// outputs an error message 
+			if (intInput < minimum || intInput > maximum)
+			{
 				cout << "That value is outside the acceptable range.  Try again." << endl;
-				getline(cin, stringInput);
-				intInput = stoi(stringInput);			
+			}
 		}
 		catch (exception& ex)
 		{
+			// outputs an error message 
+			cout << "That value is outside the acceptable range.  Try again." << endl;
+
+			// returns a value outside the acceptable range so the user needs to
+			// input another number
 			intInput = minimum - 1;
 		}
 	}

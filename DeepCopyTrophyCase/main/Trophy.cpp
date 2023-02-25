@@ -6,8 +6,8 @@ using namespace std;
 // all colors have the same options for colors
 string Trophy::colors[4] = { "DEFAULT","BRONZE","SILVER","GOLD" };
 
-/*o
-* Default constructor for a trophy
+/*
+* Default trophy constructor
 */
 Trophy::Trophy()
 {
@@ -28,7 +28,7 @@ Trophy::Trophy(string newName, int newLevel, Color newColor)
 }
 
 /*
-* Deep copies a trophy
+* Copy Constructor
 */
 Trophy::Trophy(const Trophy& trophy)
 {
@@ -38,7 +38,7 @@ Trophy::Trophy(const Trophy& trophy)
 }
 
 /*
-* Deconstructs a trophy
+* Deconstructor
 */
 Trophy::~Trophy()
 {
