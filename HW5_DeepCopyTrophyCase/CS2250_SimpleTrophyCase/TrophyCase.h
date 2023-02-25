@@ -27,5 +27,6 @@ private:
 	int capacity;
 	int searchTrophies(string name);
 	void sortTrophies();
+	void expandTrophies();
 };
 #endif

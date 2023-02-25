@@ -14,7 +14,7 @@ TrophyCase::TrophyCase(const TrophyCase& trophyCase)
 	capacity = trophyCase.capacity;
 	nbrOfTrophies = trophyCase.nbrOfTrophies;
 	trophies = new Trophy * [capacity];
-	for (int index = 0; index < trophyCase.nbrOfTrophies; index++)
+	for (int index = 0; index < nbrOfTrophies; index++)
 	{
 		trophies[index] = new Trophy(*trophyCase.trophies[index]);
 	}
@@ -39,17 +39,15 @@ int TrophyCase::getAllocatedSize() const
 
 void TrophyCase::addTrophy(string name, int level, Color color)
 {
-	if (nbrOfTrophies < capacity)
+	if (nbrOfTrophies >= capacity)
 	{
-		Trophy* trophy = new Trophy(name, level, color);
-		trophies[nbrOfTrophies] = trophy;
-		nbrOfTrophies++;
-		sortTrophies();
+		expandTrophies();
 	}
-	else
-	{
 
-	}
+	Trophy* trophy = new Trophy(name, level, color);
+	trophies[nbrOfTrophies] = trophy;
+	nbrOfTrophies++;
+	sortTrophies();
 }
 bool TrophyCase::copyTrophy(string name)
 {
@@ -71,6 +69,12 @@ bool TrophyCase::deleteTrophy(string name)
 		delete trophies[index];
 		trophies[index] = nullptr;
 		nbrOfTrophies--;
+		while (index < nbrOfTrophies)
+		{
+			trophies[index] = trophies[index + 1];
+			index++;
+		}
+		sortTrophies();
 		return true;
 	}
 	return false;
@@ -82,6 +86,7 @@ bool TrophyCase::renameTrophy(string name, string newName)
 	if (index != -1)
 	{
 		trophies[index]->setName(newName);
+		sortTrophies();
 		return true;
 	}
 	return false;
@@ -93,6 +98,7 @@ bool TrophyCase::relevelTrophy(string name, int newLevel)
 	if (index != -1)
 	{
 		trophies[index]->setLevel(newLevel);
+		sortTrophies();
 		return true;
 	}
 	return false;
@@ -104,6 +110,7 @@ bool TrophyCase::recolorTrophy(string name, Color newColor)
 	if (index != -1)
 	{
 		trophies[index]->setColor(newColor);
+		sortTrophies();
 		return true;
 	}
 	return false;
@@ -120,13 +127,14 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 		delete[] trophies;
 
 		capacity = trophyCase.capacity;
-		trophies = new Trophy * [capacity]; 
+		trophies = new Trophy * [capacity];
 		nbrOfTrophies = trophyCase.nbrOfTrophies;
 
-		for (int index = 0; index < capacity; index++)
+		for (int index = 0; index < nbrOfTrophies; index++)
 		{
-			trophies[index] = trophyCase.trophies[index];
+			trophies[index] = new Trophy(*trophyCase.trophies[index]);
 		}
+		sortTrophies();
 	}
 	return *this;
 }
@@ -135,7 +143,7 @@ ostream& operator<<(ostream& sout, const TrophyCase& trophyCase)
 	for (int index = 0; index < trophyCase.nbrOfTrophies; index++)
 	{
 		sout << *trophyCase.trophies[index] << endl;
-		
+
 	}
 	return sout;
 }
@@ -162,5 +170,17 @@ void TrophyCase::sortTrophies()
 		{
 			return *a < *b;
 		});
+}
+
+void TrophyCase::expandTrophies()
+{
+	capacity++;
+	Trophy** newTrophies = new Trophy * [capacity];
+	for (int index = 0; index < nbrOfTrophies; index++)
+	{
+		newTrophies[index] = trophies[index];
+	}
+	delete[] trophies;
+	trophies = newTrophies;
 }
 

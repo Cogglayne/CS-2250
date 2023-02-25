@@ -98,57 +98,30 @@ void Trophy::setColor(Color newColor)
 
 bool Trophy::operator<(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == -1)
-	{
-		return true;
-	}
-	return false;
+	int comparision = this->compare(other);
+	return compare(other) < 0;
 }
 bool Trophy::operator>(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == 1)
-	{
-		return true;
-	}
-	return false;
+	int comparision = this->compare(other);
+	return compare(other) > 0;
 }
 bool Trophy::operator==(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == 0)
-	{
-		return true;
-	}
-	return false;
+	int comparision = this->compare(other);
+	return compare(other) == 0;
 }
 bool Trophy::operator!=(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == -1 || comparison == 1)
-	{
-		return true;
-	}
-	return false;
+	return compare(other) != 0;
 }
 bool Trophy::operator<=(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == -1 || comparison == 0)
-	{
-		return true;
-	}
-	return false;
+	return compare(other) <= 0;
 }
 bool Trophy::operator>=(const Trophy& other)
 {
-	int comparison = this->compare(other);
-	if (comparison == 1 || comparison == 0)
-	{
-		return true;
-	}
-	return false;
+	return compare(other) >= 0;
 }
 
 /*
@@ -180,48 +153,14 @@ int Trophy::compare(const Trophy& trophy)
 {
 	if (*level != *trophy.level)
 	{
-		if (*level < *trophy.level)
-		{
-			return -1;
-		}
-		else if (*level == *trophy.level)
-		{
-			return 0;
-		}
-		else if (*level > *trophy.level)
-		{
-			return 1;
-		}
+		return *level < *trophy.level ? -1 : 1;
 	}
 	else if (*color != *trophy.color)
 	{
-		if (*color < *trophy.color)
-		{
-			return -1;
-		}
-		else if (*color == *trophy.color)
-		{
-			return 0;
-		}
-		else if (*color > *trophy.color)
-		{
-			return 1;
-		}
+		return *color < *trophy.color ? -1 : 1;
 	}
 	else
 	{
-		if (*name < *trophy.name)
-		{
-			return -1;
-		}
-		else if (*name == *trophy.name)
-		{
-			return 0;
-		}
-		else if (*name > *trophy.name)
-		{
-			return 1;
-		}
-
+		return getName().compare(trophy.getName());
 	}
 }
