@@ -4,9 +4,9 @@ using namespace std;
 #ifndef TROPHY_H
 #define TROPHY_H
 
-/*
-* An enum of colors
-*/
+/// <summary>
+/// An enum of colors
+/// </summary>
 enum Color
 {
 	BRONZE,
@@ -14,44 +14,48 @@ enum Color
 	GOLD,
 };
 
-/*
-* A trophy
-*/
+/// <summary>
+/// A trophy
+/// </summary>
 class Trophy
 {
 public:
-	// method prototypes
+	// constructors
 	Trophy();
 	Trophy(string newName, int newLevel, Color newColor);
 	Trophy(const Trophy& trophy);
+
+	// deconstructor
 	~Trophy();
 
+	// getters
 	string getName() const;
 	int getLevel() const;
 	Color getColor() const;
 
+	// setters
 	void setName(string newName);
 	void setLevel(int newLevel);
 	void setColor(Color newColor);
 
+	// opertors
 	bool operator<(const Trophy& other) const;
 	bool operator>(const Trophy& other) const;
 	bool operator==(const Trophy& other) const;
 	bool operator!=(const Trophy& other) const;
 	bool operator<=(const Trophy& other) const;
 	bool operator>=(const Trophy& other) const;
-
 	Trophy& operator=(const Trophy& trophy);
-
 	friend ostream& operator<<(ostream& sout, const Trophy& trophy);
-
-	int compare(const Trophy& trophy) const;
 private:
 	// variables
 	Color* color;
 	string* name;
 	int* level;
 	static string colors[];
+
+	// helper methods
+	int compare(const Trophy& trophy) const;
 };
 
 #endif

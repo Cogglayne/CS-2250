@@ -7,9 +7,9 @@ using namespace std;
 // all colors have the same options for colors
 string Trophy::colors[3] = { "BRONZE","SILVER","GOLD" };
 
-/*
-* Default trophy constructor
-*/
+/// <summary>
+/// Default trophy constructor
+/// </summary>
 Trophy::Trophy()
 {
 	name = new string("");
@@ -17,10 +17,12 @@ Trophy::Trophy()
 	color = new Color(Color::BRONZE);
 }
 
-/*
-* Trophy constructor with parameters for the trophy's name,
-* level, and color.
-*/
+/// <summary>
+/// * Trophy constructor with parameters for the trophy's name, *level, and color.
+/// </summary>
+/// <param name="newName">Name of trophy being created</param>
+/// <param name="newLevel">Level of trophy being created</param>
+/// <param name="newColor">Color of trophy being created</param>
 Trophy::Trophy(string newName, int newLevel, Color newColor)
 {
 	name = new string(newName);
@@ -28,9 +30,10 @@ Trophy::Trophy(string newName, int newLevel, Color newColor)
 	color = new Color(newColor);
 }
 
-/*
-* Copy Constructor
-*/
+/// <summary>
+///  Copy Constructor
+/// </summary>
+/// <param name="trophy">Trophy being copied</param>
 Trophy::Trophy(const Trophy& trophy)
 {
 	name = new string(trophy.getName());
@@ -38,9 +41,9 @@ Trophy::Trophy(const Trophy& trophy)
 	color = new Color(trophy.getColor());
 }
 
-/*
-* Deconstructor
-*/
+/// <summary>
+///  Deconstructor
+/// </summary>
 Trophy::~Trophy()
 {
 	delete name;
@@ -48,93 +51,142 @@ Trophy::~Trophy()
 	delete color;
 }
 
-/*
-* Gets the name of the trophy
-*/
+/// <summary>
+/// Getter for the trophy's name
+/// </summary>
+/// <returns>The trophy's name</returns>
 string Trophy::getName() const
 {
 	return *name;
 }
 
-/*
-* Gets the level of the trophy
-*/
+/// <summary>
+/// Getter for the trophy's level
+/// </summary>
+/// <returns>The trophy's level</returns>
 int Trophy::getLevel() const
 {
 	return *level;
 }
 
-/*
-* Gets the color of the trophy
-*/
+/// <summary>
+/// Getter for the trophy's color
+/// </summary>
+/// <returns>The trophy's color</returns>
 Color Trophy::getColor() const
 {
 	return *color;
 }
 
-/*
-* Sets the name of the trophy
-*/
+/// <summary>
+/// Setter for the trophy's name
+/// </summary>
+/// <param name="newName">What to set the trophy's name to</param>
 void Trophy::setName(string newName)
 {
 	*name = newName;
 }
 
-/*
-* Sets the level of the trophy
-*/
+/// <summary>
+/// Setter for the trophy's level
+/// </summary>
+/// <param name="newName">What to set the trophy's level to</param>
 void Trophy::setLevel(int newLevel)
 {
 	*level = newLevel;
 }
 
-/*
-* Sets the color of the trophy
-*/
+/// <summary>
+/// Setter for the trophy's color
+/// </summary>
+/// <param name="newName">What to set the trophy's color to</param>
 void Trophy::setColor(Color newColor)
 {
 	*color = newColor;
 }
 
+/// <summary>
+/// < operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is less than, otherwise false</returns>
 bool Trophy::operator<(const Trophy& other) const
 {
 	return compare(other) < 0;
 }
+
+/// <summary>
+/// > operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is greater than, otherwise false</returns>
 bool Trophy::operator>(const Trophy& other) const
 {
 	return compare(other) > 0;
 }
+
+/// <summary>
+/// == operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is equal, otherwise false</returns>
 bool Trophy::operator==(const Trophy& other) const
 {
 	return compare(other) == 0;
 }
+
+/// <summary>
+/// != operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is not equal, otherwise false</returns>
 bool Trophy::operator!=(const Trophy& other) const
 {
 	return compare(other) != 0;
 }
+
+/// <summary>
+/// <= operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is less than or equal to, otherwise false</returns>
 bool Trophy::operator<=(const Trophy& other) const
 {
 	return compare(other) <= 0;
 }
+
+/// <summary>
+/// >= operator overload
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>true if other is greater than or equal to, otherwise false</returns>
 bool Trophy::operator>=(const Trophy& other) const
 {
 	return compare(other) >= 0;
 }
 
-/*
-* Outputs the name, level, and color of a trophy
-*/
+/// <summary>
+/// << operator overload
+/// </summary>
+/// <param name="sout">An output stream</param>
+/// <param name="trophy">The trophy to be outputted</param>
+/// <returns>Custom output stream</returns>
 ostream& operator<<(ostream& sout, const Trophy& trophy)
 {
-	sout << "[ " << std::setw(30) << std::left << *trophy.name << " : "
-		<< *trophy.level << " : " << trophy.colors[*trophy.color] << " ]";
+	sout << "[ " << left << setw(30) << *trophy.name
+		<< " : "
+		<< setw(2) << right << *trophy.level
+		<< " : "
+		<< setw(6) << left << trophy.colors[*trophy.color] << " ]";
 
 	return sout;
 }
 
-/*
-* Assignment operator
-*/
+/// <summary>
+/// Assignment operator
+/// </summary>
+/// <param name="trophy">Trophy to assign to</param>
+/// <returns>This trophy</returns>
 Trophy& Trophy::operator=(const Trophy& trophy)
 {
 	if (&trophy != this)
@@ -143,26 +195,26 @@ Trophy& Trophy::operator=(const Trophy& trophy)
 		*level = *trophy.level;
 		*color = *trophy.color;
 	}
+
 	return *this;
 }
-
-int Trophy::compare(const Trophy& trophy) const
+/// <summary>
+/// Compares two trophies
+/// </summary>
+/// <param name="other">Trophy to compare against</param>
+/// <returns>1 if other is greater than, 0 if other is equal, -1 if other is less than</returns>
+int Trophy::compare(const Trophy& other) const
 {
-	if (*level != *trophy.level)
+	if (*level != *other.level)
 	{
-		return *level < *trophy.level ? -1 : 1;
+		return (*level < *other.level) ? -1 : 1;
 	}
-	else if (*color != *trophy.color)
+	else if (*color != *other.color)
 	{
-		return *color < *trophy.color ? -1 : 1;
+		return (*color < *other.color) ? -1 : 1;
 	}
 	else
 	{
-		return name->compare(*trophy.name); 
+		return (*name < *other.name) ? -1 : ((*name == *other.name) ? 0 : 1);
 	}
 }
-/*
-* 		return (*level < *trophy.level) ? -1 : ((*level == *trophy.level) ? 0 : 1);
-		return (*color < *trophy.color) ? -1 : ((*color == *trophy.color) ? 0 : 1);
-		see if if else statements will use operators other than <
-*/
