@@ -24,6 +24,7 @@ TrophyCase::~TrophyCase()
 	for (int index = 0; index < nbrOfTrophies; index++)
 	{
 		delete trophies[index];
+		trophies[index] = nullptr;
 	}
 	delete[] trophies;
 }
@@ -123,6 +124,7 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 		for (int index = 0; index < nbrOfTrophies; index++)
 		{
 			delete trophies[index];
+			trophies[index] = nullptr;
 		}
 		delete[] trophies;
 
@@ -132,7 +134,7 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 
 		for (int index = 0; index < nbrOfTrophies; index++)
 		{
-			trophies[index] = new Trophy(*trophyCase.trophies[index]);
+			trophies[index] = (trophyCase.trophies[index]);
 		}
 		sortTrophies();
 	}

@@ -5,7 +5,7 @@
 using namespace std;
 
 // all colors have the same options for colors
-string Trophy::colors[4] = { "DEFAULT","BRONZE","SILVER","GOLD" };
+string Trophy::colors[3] = { "BRONZE","SILVER","GOLD" };
 
 /*
 * Default trophy constructor
@@ -14,7 +14,7 @@ Trophy::Trophy()
 {
 	name = new string("");
 	level = new int(0);
-	color = new Color(Color::DEFAULT);
+	color = new Color(Color::BRONZE);
 }
 
 /*
@@ -96,30 +96,27 @@ void Trophy::setColor(Color newColor)
 	*color = newColor;
 }
 
-bool Trophy::operator<(const Trophy& other)
+bool Trophy::operator<(const Trophy& other) const
 {
-	int comparision = this->compare(other);
 	return compare(other) < 0;
 }
-bool Trophy::operator>(const Trophy& other)
+bool Trophy::operator>(const Trophy& other) const
 {
-	int comparision = this->compare(other);
 	return compare(other) > 0;
 }
-bool Trophy::operator==(const Trophy& other)
+bool Trophy::operator==(const Trophy& other) const
 {
-	int comparision = this->compare(other);
 	return compare(other) == 0;
 }
-bool Trophy::operator!=(const Trophy& other)
+bool Trophy::operator!=(const Trophy& other) const
 {
 	return compare(other) != 0;
 }
-bool Trophy::operator<=(const Trophy& other)
+bool Trophy::operator<=(const Trophy& other) const
 {
 	return compare(other) <= 0;
 }
-bool Trophy::operator>=(const Trophy& other)
+bool Trophy::operator>=(const Trophy& other) const
 {
 	return compare(other) >= 0;
 }
@@ -149,7 +146,7 @@ Trophy& Trophy::operator=(const Trophy& trophy)
 	return *this;
 }
 
-int Trophy::compare(const Trophy& trophy)
+int Trophy::compare(const Trophy& trophy) const
 {
 	if (*level != *trophy.level)
 	{
@@ -161,6 +158,11 @@ int Trophy::compare(const Trophy& trophy)
 	}
 	else
 	{
-		return getName().compare(trophy.getName());
+		return name->compare(*trophy.name); 
 	}
 }
+/*
+* 		return (*level < *trophy.level) ? -1 : ((*level == *trophy.level) ? 0 : 1);
+		return (*color < *trophy.color) ? -1 : ((*color == *trophy.color) ? 0 : 1);
+		see if if else statements will use operators other than <
+*/

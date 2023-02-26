@@ -9,7 +9,6 @@ using namespace std;
 */
 enum Color
 {
-	DEFAULT,
 	BRONZE,
 	SILVER,
 	GOLD,
@@ -35,18 +34,18 @@ public:
 	void setLevel(int newLevel);
 	void setColor(Color newColor);
 
-	bool operator<(const Trophy& other);
-	bool operator>(const Trophy& other);
-	bool operator==(const Trophy& other);
-	bool operator!=(const Trophy& other);
-	bool operator<=(const Trophy& other);
-	bool operator>=(const Trophy& other);
+	bool operator<(const Trophy& other) const;
+	bool operator>(const Trophy& other) const;
+	bool operator==(const Trophy& other) const;
+	bool operator!=(const Trophy& other) const;
+	bool operator<=(const Trophy& other) const;
+	bool operator>=(const Trophy& other) const;
 
 	Trophy& operator=(const Trophy& trophy);
 
 	friend ostream& operator<<(ostream& sout, const Trophy& trophy);
 
-	int compare(const Trophy& trophy);
+	int compare(const Trophy& trophy) const;
 private:
 	// variables
 	Color* color;
