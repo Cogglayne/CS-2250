@@ -74,6 +74,14 @@ int main()
 			break;
 		case 8:		// Exit
 			cout << "You have chosen to exit the application, good-bye!" << endl;
+
+			// delete the memory and set each pointer to nullptr
+			for (int index = 0; index < trophies.size(); index++)
+			{
+				delete trophies[index];
+				trophies[index] = nullptr;
+			}
+
 			break;
 		default:
 			cout << "That is not a recognized menu selection, choose again." << endl;

@@ -1,4 +1,6 @@
-﻿  main.cpp
-D:\Coding\CS 2250\DeepCopyTrophyCase\main\main.cpp(112,20): warning C4101: 'ex': unreferenced local variable
-D:\Coding\CS 2250\DeepCopyTrophyCase\main\main.cpp(318,21): warning C4101: 'ex': unreferenced local variable
+﻿  Trophy.cpp
+  main.cpp
+D:\Coding\CS 2250\DeepCopyTrophyCase\main\main.cpp(117,20): warning C4101: 'ex': unreferenced local variable
+D:\Coding\CS 2250\DeepCopyTrophyCase\main\main.cpp(323,21): warning C4101: 'ex': unreferenced local variable
+  Generating Code...
   main.vcxproj -> D:\Coding\CS 2250\DeepCopyTrophyCase\x64\Debug\main.exe
