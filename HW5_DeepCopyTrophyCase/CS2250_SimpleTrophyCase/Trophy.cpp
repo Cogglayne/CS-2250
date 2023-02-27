@@ -213,8 +213,12 @@ int Trophy::compare(const Trophy& other) const
 	{
 		return (*color < *other.color) ? -1 : 1;
 	}
+	else if (*name != *other.name)
+	{
+		return (*name < *other.name) ? -1 : 1;
+	}
 	else
 	{
-		return (*name < *other.name) ? -1 : ((*name == *other.name) ? 0 : 1);
+		return 0;
 	}
 }
