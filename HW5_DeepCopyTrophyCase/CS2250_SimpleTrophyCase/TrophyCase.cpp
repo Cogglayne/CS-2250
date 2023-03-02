@@ -259,7 +259,8 @@ void TrophyCase::sortTrophies()
 /// </summary>
 void TrophyCase::expandTrophies()
 {
-	capacity++;
+	int expansionAmount = capacity * .1;
+	capacity += expansionAmount;
 	Trophy** newTrophies = new Trophy * [capacity];
 	for (int index = 0; index < nbrOfTrophies; index++)
 	{
