@@ -71,7 +71,7 @@ int TrophyCase::getAllocatedSize() const
 /// <param name="name">Name of the trophy</param>
 /// <param name="level">Level of the trophy</param>
 /// <param name="color">Color of the trophy</param>
-void TrophyCase::addTrophy(string name, int level, Color color)
+void TrophyCase::addTrophy(const string& name, const int& level, const Color& color)
 {
 	if (nbrOfTrophies >= capacity)
 	{
@@ -91,7 +91,7 @@ void TrophyCase::addTrophy(string name, int level, Color color)
 /// </summary>
 /// <param name="name">The name of the trophy the user wants to copy</param>
 /// <returns>True if the trophy name was found, false otherwise</returns>
-bool TrophyCase::copyTrophy(string name)
+bool TrophyCase::copyTrophy(const string& name)
 {
 	// searches for the trophy and if it exists copies it
 	int index = searchTrophies(name);
@@ -110,7 +110,7 @@ bool TrophyCase::copyTrophy(string name)
 /// </summary>
 /// <param name="name">The name of the trophy the user wants to delete</param>
 /// <returns>True if the trophy name was found, false otherwise</returns>
-bool TrophyCase::deleteTrophy(string name)
+bool TrophyCase::deleteTrophy(const string& name)
 {
 	// searches for the trophy and if it exists deletes it and reduces the number of trophies
 	int index = searchTrophies(name);
@@ -140,7 +140,7 @@ bool TrophyCase::deleteTrophy(string name)
 /// <param name="name">The name of the trophy the user wants to rename</param>
 /// <param name="newName">The new name for the trophy</param>
 /// <returns>True if the trophy name was found, false otherwise</returns>
-bool TrophyCase::renameTrophy(string name, string newName)
+bool TrophyCase::renameTrophy(const string& name, const string& newName)
 {
 	// searches for the trophy and if it exists renames the trophy
 	int index = searchTrophies(name);
@@ -161,7 +161,7 @@ bool TrophyCase::renameTrophy(string name, string newName)
 /// <param name="name">The name of the trophy the user wants to relevel</param>
 /// <param name="newLevel">The new level for the trophy</param>
 /// <returns>True if the trophy name was found, false otherwise</returns>
-bool TrophyCase::relevelTrophy(string name, int newLevel)
+bool TrophyCase::relevelTrophy(const string& name, const int& newLevel)
 {
 	// searches for the trophy and if it exists relevels the trophy
 	int index = searchTrophies(name);
@@ -182,7 +182,7 @@ bool TrophyCase::relevelTrophy(string name, int newLevel)
 /// <param name="name">The name of the trophy the user wants to recolor</param>
 /// <param name="newColor">The new color for the trophy</param>
 /// <returns>True if the trophy name was found, false otherwise</returns>
-bool TrophyCase::recolorTrophy(string name, Color newColor)
+bool TrophyCase::recolorTrophy(const string& name, const Color& newColor)
 {
 	// searches for the trophy and if it exists recolors the trophy
 	int index = searchTrophies(name);
@@ -224,7 +224,7 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 		// copy trophies into the new array
 		for (int index = 0; index < nbrOfTrophies; index++)
 		{
-			trophies[index] = new Trophy(*trophyCase.trophies[index]); 
+			trophies[index] = new Trophy(*trophyCase.trophies[index]);
 		}
 
 		sortTrophies();
@@ -255,7 +255,7 @@ ostream& operator<<(ostream& sout, const TrophyCase& trophyCase)
 /// </summary>
 /// <param name="name">The name of the trophy to be found</param>
 /// <returns>The trophies index if it was found, -1 otherwise</returns>
-int TrophyCase::searchTrophies(string name)
+int TrophyCase::searchTrophies(const string& name)
 {
 	// loops through a vector to find a trophy
 	for (int index = 0; index < nbrOfTrophies; index++)

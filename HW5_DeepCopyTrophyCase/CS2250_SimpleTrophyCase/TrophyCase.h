@@ -20,12 +20,12 @@ public:
 	int getAllocatedSize() const;
 
 	// methods
-	void addTrophy(string name, int level, Color color);
-	bool copyTrophy(string name);
-	bool deleteTrophy(string name);
-	bool renameTrophy(string name, string newName);
-	bool relevelTrophy(string name, int newLevel);
-	bool recolorTrophy(string name, Color newColor);
+	void addTrophy(const string& name, const int& level, const Color& color);
+	bool copyTrophy(const string& name);
+	bool deleteTrophy(const string& name);
+	bool renameTrophy(const string& name, const string& newName);
+	bool relevelTrophy(const string& name, const int& newLevel);
+	bool recolorTrophy(const string& name, const Color& newColor);
 
 	// operators
 	TrophyCase& operator=(const TrophyCase& trophyCase);
@@ -37,7 +37,7 @@ private:
 	int capacity;
 
 	// helper methods
-	int searchTrophies(string name);
+	int searchTrophies(const string& name);
 	void sortTrophies();
 	void expandTrophies();
 };

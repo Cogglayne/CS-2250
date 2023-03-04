@@ -22,7 +22,7 @@ class Trophy
 public:
 	// constructors
 	Trophy();
-	Trophy(string newName, int newLevel, Color newColor);
+	Trophy(const string& newName, const int& newLevel, const Color& newColor);
 	Trophy(const Trophy& trophy);
 
 	// deconstructor
@@ -34,9 +34,9 @@ public:
 	Color getColor() const;
 
 	// setters
-	void setName(string newName);
-	void setLevel(int newLevel);
-	void setColor(Color newColor);
+	void setName(const string& newName);
+	void setLevel(const int& newLevel);
+	void setColor(const Color& newColor);
 
 	// opertors
 	bool operator<(const Trophy& other) const;

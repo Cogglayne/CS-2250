@@ -23,7 +23,7 @@ Trophy::Trophy()
 /// <param name="newName">Name of trophy being created</param>
 /// <param name="newLevel">Level of trophy being created</param>
 /// <param name="newColor">Color of trophy being created</param>
-Trophy::Trophy(string newName, int newLevel, Color newColor)
+Trophy::Trophy(const string& newName, const int& newLevel, const Color& newColor)
 {
 	name = new string(newName);
 	level = new int(newLevel);
@@ -82,7 +82,7 @@ Color Trophy::getColor() const
 /// Setter for the trophy's name
 /// </summary>
 /// <param name="newName">What to set the trophy's name to</param>
-void Trophy::setName(string newName)
+void Trophy::setName(const string& newName)
 {
 	*name = newName;
 }
@@ -91,7 +91,7 @@ void Trophy::setName(string newName)
 /// Setter for the trophy's level
 /// </summary>
 /// <param name="newName">What to set the trophy's level to</param>
-void Trophy::setLevel(int newLevel)
+void Trophy::setLevel(const int& newLevel)
 {
 	*level = newLevel;
 }
@@ -100,7 +100,7 @@ void Trophy::setLevel(int newLevel)
 /// Setter for the trophy's color
 /// </summary>
 /// <param name="newName">What to set the trophy's color to</param>
-void Trophy::setColor(Color newColor)
+void Trophy::setColor(const Color& newColor)
 {
 	*color = newColor;
 }
