@@ -22,6 +22,8 @@ TrophyCase::TrophyCase(const TrophyCase& trophyCase)
 	capacity = trophyCase.capacity;
 	nbrOfTrophies = trophyCase.nbrOfTrophies;
 	trophies = new Trophy * [capacity];
+
+	// copies over the trophies
 	for (int index = 0; index < nbrOfTrophies; index++)
 	{
 		trophies[index] = new Trophy(*trophyCase.trophies[index]);
@@ -33,11 +35,14 @@ TrophyCase::TrophyCase(const TrophyCase& trophyCase)
 /// </summary>
 TrophyCase::~TrophyCase()
 {
+	// delete memory
 	for (int index = 0; index < nbrOfTrophies; index++)
 	{
 		delete trophies[index];
 		trophies[index] = nullptr;
 	}
+
+	// delete the array
 	delete[] trophies;
 }
 
@@ -73,9 +78,11 @@ void TrophyCase::addTrophy(string name, int level, Color color)
 		expandTrophies();
 	}
 
+	// add the trophy to the currrent array location and then increase number of trophies
 	Trophy* trophy = new Trophy(name, level, color);
 	trophies[nbrOfTrophies] = trophy;
 	nbrOfTrophies++;
+
 	sortTrophies();
 }
 
@@ -91,8 +98,10 @@ bool TrophyCase::copyTrophy(string name)
 	if (index != -1)
 	{
 		addTrophy(trophies[index]->getName(), trophies[index]->getLevel(), trophies[index]->getColor());
+
 		return true;
 	}
+
 	return false;
 }
 
@@ -103,19 +112,23 @@ bool TrophyCase::copyTrophy(string name)
 /// <returns>True if the trophy name was found, false otherwise</returns>
 bool TrophyCase::deleteTrophy(string name)
 {
-	// searches for the trophy and if it exists deletes it
+	// searches for the trophy and if it exists deletes it and reduces the number of trophies
 	int index = searchTrophies(name);
 	if (index != -1)
 	{
 		delete trophies[index];
 		trophies[index] = nullptr;
 		nbrOfTrophies--;
+
+		// shifts the trophies over
 		while (index < nbrOfTrophies)
 		{
 			trophies[index] = trophies[index + 1];
 			index++;
 		}
+
 		sortTrophies();
+
 		return true;
 	}
 	return false;
@@ -134,7 +147,9 @@ bool TrophyCase::renameTrophy(string name, string newName)
 	if (index != -1)
 	{
 		trophies[index]->setName(newName);
+
 		sortTrophies();
+
 		return true;
 	}
 	return false;
@@ -153,7 +168,9 @@ bool TrophyCase::relevelTrophy(string name, int newLevel)
 	if (index != -1)
 	{
 		trophies[index]->setLevel(newLevel);
+
 		sortTrophies();
+
 		return true;
 	}
 	return false;
@@ -172,7 +189,9 @@ bool TrophyCase::recolorTrophy(string name, Color newColor)
 	if (index != -1)
 	{
 		trophies[index]->setColor(newColor);
+
 		sortTrophies();
+
 		return true;
 	}
 	return false;
@@ -187,23 +206,30 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 {
 	if (&trophyCase != this)
 	{
+		// delete memory in the old array
 		for (int index = 0; index < nbrOfTrophies; index++)
 		{
 			delete trophies[index];
 			trophies[index] = nullptr;
 		}
+
+		// delete the old array
 		delete[] trophies;
+
 
 		capacity = trophyCase.capacity;
 		trophies = new Trophy * [capacity];
 		nbrOfTrophies = trophyCase.nbrOfTrophies;
 
+		// copy trophies into the new array
 		for (int index = 0; index < nbrOfTrophies; index++)
 		{
 			trophies[index] = new Trophy(*trophyCase.trophies[index]); 
 		}
+
 		sortTrophies();
 	}
+
 	return *this;
 }
 
@@ -215,10 +241,12 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 /// <returns>Custom output stream</returns>
 ostream& operator<<(ostream& sout, const TrophyCase& trophyCase)
 {
+	// prints each trophy in the trophycase
 	for (int index = 0; index < trophyCase.nbrOfTrophies; index++)
 	{
 		sout << *trophyCase.trophies[index] << endl;
 	}
+
 	return sout;
 }
 
@@ -259,14 +287,21 @@ void TrophyCase::sortTrophies()
 /// </summary>
 void TrophyCase::expandTrophies()
 {
+	// expand the array
 	int expansionAmount = capacity * .1;
 	capacity += expansionAmount;
 	Trophy** newTrophies = new Trophy * [capacity];
+
+	// copy over trophies
 	for (int index = 0; index < nbrOfTrophies; index++)
 	{
 		newTrophies[index] = trophies[index];
 	}
+
+	// delete old array
 	delete[] trophies;
+
+	// set the trophycase to the new expanded array
 	trophies = newTrophies;
 }
 

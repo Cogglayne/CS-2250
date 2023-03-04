@@ -109,7 +109,7 @@ void Trophy::setColor(Color newColor)
 /// < operator overload
 /// </summary>
 /// <param name="other">Trophy to compare against</param>
-/// <returns>true if other is less than, otherwise false</returns>
+/// <returns>true if less than, otherwise false</returns>
 bool Trophy::operator<(const Trophy& other) const
 {
 	return compare(other) < 0;
@@ -119,7 +119,7 @@ bool Trophy::operator<(const Trophy& other) const
 /// > operator overload
 /// </summary>
 /// <param name="other">Trophy to compare against</param>
-/// <returns>true if other is greater than, otherwise false</returns>
+/// <returns>true if greater than, otherwise false</returns>
 bool Trophy::operator>(const Trophy& other) const
 {
 	return compare(other) > 0;
@@ -129,7 +129,7 @@ bool Trophy::operator>(const Trophy& other) const
 /// == operator overload
 /// </summary>
 /// <param name="other">Trophy to compare against</param>
-/// <returns>true if other is equal, otherwise false</returns>
+/// <returns>true if equal, otherwise false</returns>
 bool Trophy::operator==(const Trophy& other) const
 {
 	return compare(other) == 0;
@@ -149,7 +149,7 @@ bool Trophy::operator!=(const Trophy& other) const
 /// <= operator overload
 /// </summary>
 /// <param name="other">Trophy to compare against</param>
-/// <returns>true if other is less than or equal to, otherwise false</returns>
+/// <returns>true if less than or equal to, otherwise false</returns>
 bool Trophy::operator<=(const Trophy& other) const
 {
 	return compare(other) <= 0;
@@ -159,7 +159,7 @@ bool Trophy::operator<=(const Trophy& other) const
 /// >= operator overload
 /// </summary>
 /// <param name="other">Trophy to compare against</param>
-/// <returns>true if other is greater than or equal to, otherwise false</returns>
+/// <returns>true if greater than or equal to, otherwise false</returns>
 bool Trophy::operator>=(const Trophy& other) const
 {
 	return compare(other) >= 0;
@@ -173,6 +173,7 @@ bool Trophy::operator>=(const Trophy& other) const
 /// <returns>Custom output stream</returns>
 ostream& operator<<(ostream& sout, const Trophy& trophy)
 {
+	// formats the output for a trophy
 	sout << "[ " << left << setw(30) << *trophy.name
 		<< " : "
 		<< setw(2) << right << *trophy.level
@@ -205,6 +206,7 @@ Trophy& Trophy::operator=(const Trophy& trophy)
 /// <returns>1 if other is greater than, 0 if other is equal, -1 if other is less than</returns>
 int Trophy::compare(const Trophy& other) const
 {
+	// compares level, then color, then name, if they are all the same 0 is returned
 	if (*level != *other.level)
 	{
 		return (*level < *other.level) ? -1 : 1;
