@@ -11,6 +11,12 @@ TrophyCase::TrophyCase()
 	capacity = 10;
 	nbrOfTrophies = 0;
 	trophies = new Trophy * [capacity];
+
+	// set each pointer to null pointer
+	for (int index = 0; index < capacity; index++)
+	{
+		trophies[index] = nullptr;
+	}
 }
 
 /// <summary>
@@ -24,9 +30,18 @@ TrophyCase::TrophyCase(const TrophyCase& trophyCase)
 	trophies = new Trophy * [capacity];
 
 	// copies over the trophies
-	for (int index = 0; index < nbrOfTrophies; index++)
+	for (int index = 0; index < capacity; index++)
 	{
-		trophies[index] = new Trophy(*trophyCase.trophies[index]);
+		// if a trophy exists copy it over
+		if (index < nbrOfTrophies)
+		{
+			trophies[index] = new Trophy(*trophyCase.trophies[index]);
+		}
+		// otherwise set the pointer to nullpointer
+		else
+		{
+			trophies[index] = nullptr;
+		}
 	}
 }
 
@@ -222,9 +237,18 @@ TrophyCase& TrophyCase::operator=(const TrophyCase& trophyCase)
 		nbrOfTrophies = trophyCase.nbrOfTrophies;
 
 		// copy trophies into the new array
-		for (int index = 0; index < nbrOfTrophies; index++)
+		for (int index = 0; index < capacity; index++)
 		{
-			trophies[index] = new Trophy(*trophyCase.trophies[index]);
+			// if a trophy exists copy it over
+			if (index < nbrOfTrophies)
+			{
+				trophies[index] = new Trophy(*trophyCase.trophies[index]);
+			}
+			// otherwise set the pointer to nullpointer
+			else
+			{
+				trophies[index] = nullptr;
+			}
 		}
 
 		sortTrophies();
