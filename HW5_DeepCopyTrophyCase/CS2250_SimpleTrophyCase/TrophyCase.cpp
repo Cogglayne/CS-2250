@@ -317,9 +317,18 @@ void TrophyCase::expandTrophies()
 	Trophy** newTrophies = new Trophy * [capacity];
 
 	// copy over trophies
-	for (int index = 0; index < nbrOfTrophies; index++)
+	for (int index = 0; index < capacity; index++)
 	{
-		newTrophies[index] = trophies[index];
+		// if a trophy exists copy it over
+		if (index < nbrOfTrophies)
+		{
+			newTrophies[index] = trophies[index];
+		}
+		// otherwise set the pointer to nullpointer
+		else
+		{
+			newTrophies[index] = nullptr;
+		}
 	}
 
 	// delete old array
