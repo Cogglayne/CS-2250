@@ -45,19 +45,19 @@ DoublyLinkedList::DoublyLinkedList()
 // the "this" list, in order
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& list)
 {
+    // intialize to empty list
+    m_count = 0;
     m_head = nullptr;
     m_tail = nullptr;
 
     DoublyLinkedListNode* curr = list.m_head;
 
-    // while there are still nodes
+    // copies from the other list if the other list is not empty
     while (curr != nullptr)
     {
         addBack(curr->getData());
         curr = curr->getNext();
     }
-
-    m_count = list.m_count;
 }
 
 // Destructor
