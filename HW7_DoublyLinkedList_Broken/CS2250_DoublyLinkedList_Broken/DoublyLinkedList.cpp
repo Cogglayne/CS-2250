@@ -141,7 +141,6 @@ int DoublyLinkedList::removeFront()
     if (m_head == nullptr)
     {
 		throw string("ERROR:  Cannot remove from an empty list");
-        // might need to return an error value here - jordan
 	}
     // If there at least one item
     else if(m_head == m_tail)
