@@ -105,6 +105,7 @@ void DoublyLinkedList::addFront( int item )
         // Set the head to point to new node
         m_head = newNode;
     }
+
     ++m_count;
 }
 
@@ -129,12 +130,13 @@ void DoublyLinkedList::addBack( int item )
         // Set the tail to point to new node
         m_tail = newNode;
     }
+
     ++m_count;
 }
 
 // RemoveFront - removes the first item in the list
 // Returns the value stored in the first item in the list
-// Displays an error and returns 0 if the list is empty
+// Displays an error if the list is empty
 int DoublyLinkedList::removeFront()
 {
     // If there are no items in the list
@@ -182,7 +184,7 @@ int DoublyLinkedList::removeFront()
 
 // RemoveBack - removes the last item in the list
 // Returns the value stored in the last item in the list
-// Displays an error and returns 0 if the list is empty
+// Displays an error if the list is empty
 int DoublyLinkedList::removeBack()
 {
     // If there are no items in the list
@@ -259,6 +261,7 @@ bool DoublyLinkedList::removeItem(int item)
 
         --m_count;
     }
+
     return true;
 }
 
@@ -267,10 +270,12 @@ bool DoublyLinkedList::removeItem(int item)
 bool DoublyLinkedList::search(int item) const
 {
     DoublyLinkedListNode* curr = searchNodes(item);
+
     if (curr != nullptr)
     {
         return true;
     }
+
     return false;
 }
 
@@ -283,6 +288,7 @@ DoublyLinkedListNode* DoublyLinkedList::searchNodes(int item) const
     {
         return nullptr;
     }
+
     DoublyLinkedListNode* curr = m_head;
 
     // Iterate through the list of nodes
