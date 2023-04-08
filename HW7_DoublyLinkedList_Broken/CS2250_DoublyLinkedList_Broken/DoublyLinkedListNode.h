@@ -5,30 +5,37 @@ using namespace std;
 #ifndef DOUBLY_LINKED_LIST_NODE_H
 #define DOUBLY_LINKED_LIST_NODE_H
 
+template <class T>
+class DoublyLinkedListNode;
+
+template <class T>
+ostream& operator<<(ostream& sout, const DoublyLinkedListNode<T>& list);
+
+template <class T>
 class DoublyLinkedListNode
 {
 public:
 	// Constructors
 	DoublyLinkedListNode(void);       // Default
-	DoublyLinkedListNode(const DoublyLinkedListNode& node);    // Copy
-	DoublyLinkedListNode(int data);
-	DoublyLinkedListNode(int data, DoublyLinkedListNode* prev, DoublyLinkedListNode* next);
+	DoublyLinkedListNode(const DoublyLinkedListNode<T>& node);    // Copy
+	DoublyLinkedListNode(T data);
+	DoublyLinkedListNode(T data, DoublyLinkedListNode<T>* prev, DoublyLinkedListNode<T>* next);
 
 	// Destructor
 	~DoublyLinkedListNode(void);
 
 	// Accessors/Inspectors
-	int getData() const;
-	DoublyLinkedListNode* getNext() const;
-	DoublyLinkedListNode* getPrev() const;
+	T getData() const;
+	DoublyLinkedListNode<T>* getNext() const;
+	DoublyLinkedListNode<T>* getPrev() const;
 
 	// Mutators/Manipulators
-	void setData(int data);
-	void setNext(DoublyLinkedListNode* next);
-	void setPrev(DoublyLinkedListNode* prev);
+	void setData(T data);
+	void setNext(DoublyLinkedListNode<T>* next);
+	void setPrev(DoublyLinkedListNode<T>* prev);
 
-	DoublyLinkedListNode& operator=(const DoublyLinkedListNode& list);
-	friend ostream& operator<<(ostream& sout, const DoublyLinkedListNode& list);
+	DoublyLinkedListNode<T>& operator=(const DoublyLinkedListNode<T>& list);
+	friend ostream& operator<< <>(ostream& sout, const DoublyLinkedListNode<T>& list);
 
 	///////////////////////////////////////////////
 	// DO NOT ALTER THESE METHODS
@@ -41,9 +48,9 @@ public:
 	///////////////////////////////////////////////
 
 private:
-	int m_data;             // node's item
-	DoublyLinkedListNode* m_next; // next in list
-	DoublyLinkedListNode* m_prev;
+	T m_data;             // node's item
+	DoublyLinkedListNode<T>* m_next; // next in list
+	DoublyLinkedListNode<T>* m_prev;
 
 	///////////////////////////////////////////////
 	// DO NOT ALTER THIS DATA
@@ -54,5 +61,7 @@ private:
 	// END OF DO NOT ALTER
 	///////////////////////////////////////////////
 };
+
+#include "DoublyLinkedListNode.cpp"
 
 #endif

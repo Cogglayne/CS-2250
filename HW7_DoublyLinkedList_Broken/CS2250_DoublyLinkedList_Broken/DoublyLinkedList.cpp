@@ -1,3 +1,6 @@
+#ifndef DOUBLY_LINKED_LIST_CPP
+#define DOUBLY_LINKED_LIST_CPP
+
 #include "DoublyLinkedList.h"
 
 //////////////////////////////////////////////////////////////////////////////
@@ -8,7 +11,8 @@
 // GetHead - returns the head as a constant pointer to constant data, 
 // allowing the calling function to verify that the elements of the list
 // are correct without altering the list in any way
-const DoublyLinkedListNode* const & DoublyLinkedList::getHead() const
+template <class T>
+const DoublyLinkedListNode<T>* const & DoublyLinkedList<T>::getHead() const
 {
     return m_head;
 }
@@ -16,13 +20,15 @@ const DoublyLinkedListNode* const & DoublyLinkedList::getHead() const
 // GetTail - returns the tail as a constant pointer to constant data, 
 // allowing the calling function to verify that the elements of the list
 // are correct without altering the list in any way
-const DoublyLinkedListNode* const & DoublyLinkedList::getTail() const
+template <class T>
+const DoublyLinkedListNode<T>* const & DoublyLinkedList<T>::getTail() const
 {
     return m_tail;
 }
 
+template <class T>
 // GetCount - returns the count as an int to verify its value
-int DoublyLinkedList::getCount() const
+int DoublyLinkedList<T>::getCount() const
 {
     return m_count;
 }
@@ -33,7 +39,8 @@ int DoublyLinkedList::getCount() const
 // Default Constructor
 // Initializes first and last pointers to nullptr (empty list)
 // Sets number of nodes to zero
-DoublyLinkedList::DoublyLinkedList()
+template <class T>
+DoublyLinkedList<T>::DoublyLinkedList()
 {
     m_count = 0;
     m_head = nullptr;
@@ -43,14 +50,15 @@ DoublyLinkedList::DoublyLinkedList()
 // Copy Constructor
 // Iterates through the parameter list, adding each node to
 // the "this" list, in order
-DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& list)
+template <class T>
+DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList<T>& list)
 {
     // intialize to empty list
     m_count = 0;
     m_head = nullptr;
     m_tail = nullptr;
 
-    DoublyLinkedListNode* curr = list.m_head;
+    DoublyLinkedListNode<T>* curr = list.m_head;
 
     // copies from the other list if the other list is not empty
     while (curr != nullptr)
@@ -62,15 +70,16 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& list)
 
 // Destructor
 // Destroys any remaining nodes in the list
-DoublyLinkedList::~DoublyLinkedList()
+template <class T>
+DoublyLinkedList<T>::~DoublyLinkedList()
 {
-    DoublyLinkedListNode* curr = m_head;
+    DoublyLinkedListNode<T>* curr = m_head;
 
     // while there are still nodes
     while (curr != nullptr)
     {
         // get next node
-        DoublyLinkedListNode* next = curr->getNext();
+        DoublyLinkedListNode<T>* next = curr->getNext();
 
         // delete current node
         delete curr;
@@ -85,18 +94,19 @@ DoublyLinkedList::~DoublyLinkedList()
 }
 
 // AddFront - adds the item to the front of the list
-void DoublyLinkedList::addFront( int item )
+template <class T>
+void DoublyLinkedList<T>::addFront( T item )
 {
     if (m_head == nullptr)
     {
         // Set the head and tail to point to only node
-        m_head = new DoublyLinkedListNode(item);
+        m_head = new DoublyLinkedListNode<T>(item);
         m_tail = m_head;
     }
     else
     {
         // Create a new node
-        DoublyLinkedListNode* newNode = new DoublyLinkedListNode(item);
+        DoublyLinkedListNode<T>* newNode = new DoublyLinkedListNode<T>(item);
 
         // Connect the new node to the front of the list
         newNode->setNext(m_head);
@@ -110,18 +120,19 @@ void DoublyLinkedList::addFront( int item )
 }
 
 // AddBack - adds the item to the back of the list
-void DoublyLinkedList::addBack( int item )
+template <class T>
+void DoublyLinkedList<T>::addBack( T item )
 {
     if (m_tail == nullptr)
     {
         // Set the head and tail to point to only node
-        m_tail = new DoublyLinkedListNode(item);
+        m_tail = new DoublyLinkedListNode<T>(item);
         m_head = m_tail;
     }
     else
     {
         // Create a new node
-        DoublyLinkedListNode* newNode = new DoublyLinkedListNode(item);
+        DoublyLinkedListNode<T>* newNode = new DoublyLinkedListNode<T>(item);
 
         // Connect the new node to the back of the list
         newNode->setPrev(m_tail);
@@ -137,7 +148,8 @@ void DoublyLinkedList::addBack( int item )
 // RemoveFront - removes the first item in the list
 // Returns the value stored in the first item in the list
 // Displays an error if the list is empty
-int DoublyLinkedList::removeFront()
+template <class T>
+T DoublyLinkedList<T>::removeFront()
 {
     // If there are no items in the list
     if (m_head == nullptr)
@@ -148,7 +160,7 @@ int DoublyLinkedList::removeFront()
     else if(m_head == m_tail)
     {
         // Store data to be removed
-        int data = m_head->getData();
+        T data = m_head->getData();
 
         // delete the only node
         delete m_head;
@@ -162,10 +174,10 @@ int DoublyLinkedList::removeFront()
     else
     {
         // Store data to be removed
-        int data = m_head->getData();
+        T data = m_head->getData();
 
         // create a pointer to the node being removed
-        DoublyLinkedListNode* curr = m_head;
+        DoublyLinkedListNode<T>* curr = m_head;
 
         // set head to next node
         m_head = curr->getNext();
@@ -185,7 +197,8 @@ int DoublyLinkedList::removeFront()
 // RemoveBack - removes the last item in the list
 // Returns the value stored in the last item in the list
 // Displays an error if the list is empty
-int DoublyLinkedList::removeBack()
+template <class T>
+T DoublyLinkedList<T>::removeBack()
 {
     // If there are no items in the list
     if (m_tail == nullptr)
@@ -196,7 +209,7 @@ int DoublyLinkedList::removeBack()
     else if (m_head == m_tail)
     {
         // Store data to be removed
-        int data = m_head->getData();
+        T data = m_head->getData();
 
         // delete the only node
         delete m_head;
@@ -210,10 +223,10 @@ int DoublyLinkedList::removeBack()
     else
     {
         // Store data to be removed
-        int data = m_tail->getData();
+        T data = m_tail->getData();
 
         // create a pointer to the node being removed
-        DoublyLinkedListNode* curr = m_tail;
+        DoublyLinkedListNode<T>* curr = m_tail;
 
         // set head to next node
         m_tail = curr->getPrev();
@@ -232,9 +245,10 @@ int DoublyLinkedList::removeBack()
 
 // RemoveItem - removes first match to the parameter
 // Returns true if the item was found and removed, false otherwise
-bool DoublyLinkedList::removeItem(int item)
+template <class T>
+bool DoublyLinkedList<T>::removeItem(T item)
 {
-    DoublyLinkedListNode* curr = searchNodes(item);
+    DoublyLinkedListNode<T>* curr = searchNodes(item);
 
     // If item was not found or list is empty
     if (curr == nullptr)
@@ -267,9 +281,10 @@ bool DoublyLinkedList::removeItem(int item)
 
 // Search - searches for the parameter
 // Returns true if the item is found, false otherwise
-bool DoublyLinkedList::search(int item) const
+template <class T>
+bool DoublyLinkedList<T>::search(T item) const
 {
-    DoublyLinkedListNode* curr = searchNodes(item);
+    DoublyLinkedListNode<T>* curr = searchNodes(item);
 
     if (curr != nullptr)
     {
@@ -281,7 +296,8 @@ bool DoublyLinkedList::search(int item) const
 
 // SearchNodes - searches for the parameter and returns its node
 // Returns nullptr if the item was not found
-DoublyLinkedListNode* DoublyLinkedList::searchNodes(int item) const
+template <class T>
+DoublyLinkedListNode<T>* DoublyLinkedList<T>::searchNodes(T item) const
 {
     // if there are no nodes nullptr is returned
     if (m_count == 0)
@@ -289,7 +305,7 @@ DoublyLinkedListNode* DoublyLinkedList::searchNodes(int item) const
         return nullptr;
     }
 
-    DoublyLinkedListNode* curr = m_head;
+    DoublyLinkedListNode<T>* curr = m_head;
 
     // Iterate through the list of nodes
     while (curr != nullptr)
@@ -308,7 +324,8 @@ DoublyLinkedListNode* DoublyLinkedList::searchNodes(int item) const
 }
 
 // Size - returns the number of items in the list
-int DoublyLinkedList::size() const
+template <class T>
+int DoublyLinkedList<T>::size() const
 {
     return m_count;
 }
@@ -323,12 +340,13 @@ int DoublyLinkedList::size() const
 // as it can find up to the count (prevents infinite
 // looping from pointer errors!).  Displays memory
 // location and node values
-void DoublyLinkedList::printFullNodes() const
+template <class T>
+void DoublyLinkedList<T>::printFullNodes() const
 {
 	cout << "Head: " << m_head << endl;
 
 	int cnt = 0;
-	DoublyLinkedListNode* curr = m_head;
+	DoublyLinkedListNode<T>* curr = m_head;
 	while (curr != nullptr && cnt++ <= m_count)
 	{
 		cout << "Node: " << curr << " " << *curr << endl;
@@ -340,9 +358,10 @@ void DoublyLinkedList::printFullNodes() const
 // operator<< displays the list in a reasonable format
 // Displays the nodes forward and backward (to check both
 // directions of pointers)
-ostream& operator<<(ostream& sout, const DoublyLinkedList& list)
+template <class T>
+ostream& operator<<(ostream& sout, const DoublyLinkedList<T>& list)
 {
-	DoublyLinkedListNode* curr = list.m_head;
+	DoublyLinkedListNode<T>* curr = list.m_head;
 
 	// If the list is empty, display an appropriate message
 	if (curr == nullptr)
@@ -390,7 +409,8 @@ ostream& operator<<(ostream& sout, const DoublyLinkedList& list)
 	return sout;
 }
 
-DoublyLinkedList& DoublyLinkedList::operator=(const DoublyLinkedList& rhsList)
+template <class T>
+DoublyLinkedList<T>& DoublyLinkedList<T>::operator=(const DoublyLinkedList<T>& rhsList)
 {
 	// If this is NOT the same object as rs
 	if (this != &rhsList)
@@ -400,7 +420,7 @@ DoublyLinkedList& DoublyLinkedList::operator=(const DoublyLinkedList& rhsList)
 			removeFront();
 		}
 		// Iterator for parameter list, start at first node
-		DoublyLinkedListNode* curr = rhsList.m_head;
+		DoublyLinkedListNode<T>* curr = rhsList.m_head;
 
 		// While there are still nodes left
 		while (curr != nullptr)
@@ -415,3 +435,5 @@ DoublyLinkedList& DoublyLinkedList::operator=(const DoublyLinkedList& rhsList)
 
 	return *this;
 }
+
+#endif

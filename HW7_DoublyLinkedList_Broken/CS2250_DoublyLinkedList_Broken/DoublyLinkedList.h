@@ -3,49 +3,58 @@
 
 #include "DoublyLinkedListNode.h"
 
+template <class T>
+class DoublyLinkedList;
+
+template <class T>
+ostream& operator<<(ostream& sout, const DoublyLinkedList<T>& list);
+
+template <class T>
 class DoublyLinkedList
 {
 public:
 	// Constructors & Destructor
 	DoublyLinkedList();
-	DoublyLinkedList(const DoublyLinkedList& list);
+	DoublyLinkedList(const DoublyLinkedList<T>& list);
 	~DoublyLinkedList();
 
 	// Add methods
-	void addFront(int item);
-	void addBack(int item);
+	void addFront(T item);
+	void addBack(T item);
 
 	// Remove methods
-	int  removeFront();
-	int  removeBack();
-	bool removeItem(int item);
+	T  removeFront();
+	T  removeBack();
+	bool removeItem(T item);
 
 	// Facilitator methods
-	bool search(int item) const;
+	bool search(T item) const;
 	int  size() const;
 	void printFullNodes() const;
 
 	// Operators
-	DoublyLinkedList& operator=(const DoublyLinkedList& rhsList);
-	friend ostream& operator<<(ostream& sout, const DoublyLinkedList& list);
+	DoublyLinkedList<T>& operator=(const DoublyLinkedList<T>& rhsList);
+	friend ostream& operator<< <>(ostream& sout, const DoublyLinkedList& list);
 
 	//////////////////////////////////////////////////////////////////////////////
 	// DO NOT MODIFY THESE METHODS
 	//////////////////////////////////////////////////////////////////////////////
 	// Accessors for TESTING ONLY
-	const DoublyLinkedListNode* const & getHead() const;
-	const DoublyLinkedListNode* const & getTail() const;
+	const DoublyLinkedListNode<T>* const & getHead() const;
+	const DoublyLinkedListNode<T>* const & getTail() const;
 	int getCount() const;
 	//////////////////////////////////////////////////////////////////////////////
 	// END OF DO NOT MODIFY
 	//////////////////////////////////////////////////////////////////////////////
 
 private:
-	DoublyLinkedListNode* searchNodes(int item) const;
+	DoublyLinkedListNode<T>* searchNodes(T item) const;
 
-	DoublyLinkedListNode* m_head;   // first node in list
-	DoublyLinkedListNode* m_tail;   // last node in list
+	DoublyLinkedListNode<T>* m_head;   // first node in list
+	DoublyLinkedListNode<T>* m_tail;   // last node in list
 	int m_count;                    // number of nodes in list
 };
+
+#include "DoublyLinkedList.cpp"
 
 #endif

@@ -107,8 +107,8 @@ string constructCustomList(int values[], int size)
 ///////////////////////////////////////////////////////////////////////////////
 
 // Test the list size and report results
-
-void testListSize(DoublyLinkedList& list, int expectedResult)
+template <class T>
+void testListSize(DoublyLinkedList<T>& list, int expectedResult)
 {
 	cout << endl << "========== TEST " << ++totalTests << " ========== " << "Checking Size of List" << endl;
 	int actualResult = list.size();
@@ -119,8 +119,8 @@ void testListSize(DoublyLinkedList& list, int expectedResult)
 }
 
 // Test the list contents and report results
-
-void testListContents(DoublyLinkedList& list, string expectedResult)
+template <class T>
+void testListContents(DoublyLinkedList<T>& list, string expectedResult)
 {
 	cout << endl << "========== TEST " << ++totalTests << " ========== " << "Checking Contents of List" << endl;
 	ostringstream outputStream;
@@ -133,8 +133,8 @@ void testListContents(DoublyLinkedList& list, string expectedResult)
 }
 
 // Test the search results and report results
-
-void testSearchResult(DoublyLinkedList& list, int i, bool expectedValue)
+template <class T>
+void testSearchResult(DoublyLinkedList<T>& list, T i, bool expectedValue)
 {
 	cout << endl << "========== TEST " << ++totalTests << " ========== " << "Checking Search for " << i << endl;
 	bool searchResult = list.search(i);
@@ -147,8 +147,8 @@ void testSearchResult(DoublyLinkedList& list, int i, bool expectedValue)
 }
 
 // Test the full node print and indicate user should manually check results
-
-void testFullNodePrint(DoublyLinkedList& list)
+template <class T>
+void testFullNodePrint(DoublyLinkedList<T>& list)
 {
 	cout << endl << "Printing all of the Nodes" << endl;
 	list.printFullNodes();
@@ -157,8 +157,8 @@ void testFullNodePrint(DoublyLinkedList& list)
 }
 
 // Test removing front or back and report results
-
-void testRemovedFrontOrBack(DoublyLinkedList& list, int expectedResult, int actualResult)
+template <class T>
+void testRemovedFrontOrBack(DoublyLinkedList<T>& list, T expectedResult, T actualResult)
 {
 	cout << endl << "========== TEST " << ++totalTests << " ========== " << "Checking Removed Front or Back " << expectedResult << endl;
 	cout << setw(20) << left << "Expected Result:" << setw(60) << left << expectedResult << endl;
@@ -168,8 +168,8 @@ void testRemovedFrontOrBack(DoublyLinkedList& list, int expectedResult, int actu
 }
 
 // Test removing an internal item and report results
-
-void testRemovedItem(DoublyLinkedList& list, int i, bool expectedResult, bool actualResult)
+template <class T>
+void testRemovedItem(DoublyLinkedList<T>& list, T i, bool expectedResult, bool actualResult)
 {
 	cout << endl << "========== TEST " << ++totalTests << " ========== " << "Checking Removed Item " << i << endl;
 	cout << setw(20) << left << "Expected Result:" << setw(60) << left << expectedResult << endl;
@@ -192,7 +192,7 @@ void runIntegerTests()
 	testsPassed = 0;
 
 	// TESTING List Constructor
-	DoublyLinkedList list;
+	DoublyLinkedList<int> list;
 	cout << list << endl;
 
 	// TESTING List AddFront, Size and operator<<
@@ -349,7 +349,7 @@ void runIntegerTests()
 	// TESTING List Constructors, Destructors and operator=
 	cout << "\n************************  TESTING Constructors and Destructors **************************" << endl;
 
-	DoublyLinkedList* listPtr1 = new DoublyLinkedList();
+	DoublyLinkedList<int>* listPtr1 = new DoublyLinkedList<int>();
 
 	// prepare a list
 	for (int i = 1; i <= 5; ++i)
@@ -361,7 +361,7 @@ void runIntegerTests()
 	testFullNodePrint(*listPtr1);
 
 	// Test the copy constructor
-	DoublyLinkedList* listPtr2 = new DoublyLinkedList(*listPtr1);
+	DoublyLinkedList<int>* listPtr2 = new DoublyLinkedList<int>(*listPtr1);
 	testListSize(*listPtr2, 5);
 	testListContents(*listPtr2, constructList(5));
 	testFullNodePrint(*listPtr2);
@@ -373,7 +373,7 @@ void runIntegerTests()
 
 	cout << "\n************************  TESTING operator= **************************" << endl;
 	// Test the assignment operator
-	listPtr2 = new DoublyLinkedList();
+	listPtr2 = new DoublyLinkedList<int>();
 	*listPtr2 = *listPtr1;
 	testListSize(*listPtr1, 5);
 	testListContents(*listPtr1, constructList(5));
@@ -412,7 +412,6 @@ void runIntegerTests()
 ///////////////////////////////////////////////////////////////////////////////
 void runStringTests()
 {
-/*
 	cout << "***********************************************************************************************************" << endl;
 	cout << "*********************************************  STRING TESTS  **********************************************" << endl;
 	cout << "***********************************************************************************************************" << endl;
@@ -422,7 +421,7 @@ void runStringTests()
 	testsPassed = 0;
 
 	// TESTING List Constructor
-	DoublyLinkedList list;
+	DoublyLinkedList<string> list;
 	cout << list << endl;
 
 	// TESTING List AddFront, Size and operator<<
@@ -579,19 +578,19 @@ void runStringTests()
 	// TESTING List Constructors, Destructors and operator=
 	cout << "\n************************  TESTING Constructors and Destructors **************************" << endl;
 
-	DoublyLinkedList* listPtr1 = new DoublyLinkedList();
+	DoublyLinkedList<string>* listPtr1 = new DoublyLinkedList<string>();
 
 	// prepare a list
 	for (int i = 1; i <= 5; ++i)
 	{
-		listPtr1->addFront(i);
+		listPtr1->addFront(std::to_string(i));
 	}
 	testListSize(*listPtr1, 5);
 	testListContents(*listPtr1, constructList(5));
 	testFullNodePrint(*listPtr1);
 
 	// Test the copy constructor
-	DoublyLinkedList* listPtr2 = new DoublyLinkedList(*listPtr1);
+	DoublyLinkedList<string>* listPtr2 = new DoublyLinkedList<string>(*listPtr1);
 	testListSize(*listPtr2, 5);
 	testListContents(*listPtr2, constructList(5));
 	testFullNodePrint(*listPtr2);
@@ -603,7 +602,7 @@ void runStringTests()
 
 	cout << "\n************************  TESTING operator= **************************" << endl;
 	// Test the assignment operator
-	listPtr2 = new DoublyLinkedList();
+	listPtr2 = new DoublyLinkedList<string>();
 	*listPtr2 = *listPtr1;
 	testListSize(*listPtr1, 5);
 	testListContents(*listPtr1, constructList(5));
@@ -635,7 +634,7 @@ void runStringTests()
 	cout << "Passed Tests:   " << setw(10) << right << testsPassed << endl;
 	cout << "Percent Passed: " << setw(10) << right << (testsPassed / (double)totalTests) * 100 << endl;
 	cout << endl << endl;
-*/
+
 }
 
 int main()
