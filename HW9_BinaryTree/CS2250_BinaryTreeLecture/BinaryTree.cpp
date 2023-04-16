@@ -18,7 +18,17 @@ BinaryTree<T>::BinaryTree(bool isAVL)
 template <class T>
 BinaryTree<T>::~BinaryTree(void)
 {
-	// TODO: Add your code here
+	if (root != NULL)
+	{
+		if (root->GetLeft() == NULL && root->GetRight() == NULL)
+		{
+			delete root;
+		}
+		else
+		{
+			MakeEmpty(root);
+		}
+	}
 }
 
 // MakeEmpty
@@ -26,7 +36,16 @@ BinaryTree<T>::~BinaryTree(void)
 template <class T>
 void BinaryTree<T>::MakeEmpty(BinaryTreeNode<T>* curr)
 {
-	// TODO: Add your code here
+	if (curr == NULL)
+	{
+		return;
+	}
+
+	MakeEmpty(curr->GetLeft());
+	MakeEmpty(curr->GetRight());
+
+	delete curr;
+	curr = NULL;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -70,8 +89,7 @@ void BinaryTree<T>::Insert(const T& item, BinaryTreeNode<T>* curr)
 		// The left child doesn't exist, add it
 		else
 		{
-			BinaryTreeNode<T>* child = new BinaryTreeNode<T>(item);
-			curr->SetLeft(child);
+			curr->SetLeft(new BinaryTreeNode<T>(item));
 		}
 	}
 	// Head to the right
@@ -85,8 +103,7 @@ void BinaryTree<T>::Insert(const T& item, BinaryTreeNode<T>* curr)
 		// The right child doesn't exist, add it
 		else
 		{
-			BinaryTreeNode<T>* child = new BinaryTreeNode<T>(item);
-			curr->SetRight(child);
+			curr->SetRight(new BinaryTreeNode<T>(item));
 		}
 	}
 	else 
@@ -107,9 +124,14 @@ void BinaryTree<T>::Insert(const T& item, BinaryTreeNode<T>* curr)
 template <class T>
 bool BinaryTree<T>::Search(const T& item) const
 {
-	// TODO: Add your code here
-
-	return false;
+	if (root == NULL)
+	{
+		return false;
+	}
+	else
+	{
+		return Search(item, root);
+	}
 }
 
 // Search
@@ -122,9 +144,28 @@ bool BinaryTree<T>::Search(const T& item) const
 template <class T>
 bool BinaryTree<T>::Search(const T& item, BinaryTreeNode<T>* curr) const
 {
-	// TODO: Add your code here
-
-	return false;
+	// Head to the left
+	if (item < curr->GetData())
+	{
+		// If the left child exists
+		if (curr->GetLeft() != NULL)
+		{
+			return Search(item, curr->GetLeft());
+		}
+	}
+	// Head to the right
+	else if (item > curr->GetData())
+	{
+		// If the right child exists
+		if (curr->GetRight() != NULL)
+		{
+			return Search(item, curr->GetRight());
+		}
+	}
+	else
+	{
+		return true;
+	}
 }
 
 /////////////////////////////////////////////////////////////////
@@ -142,14 +183,17 @@ bool BinaryTree<T>::Search(const T& item, BinaryTreeNode<T>* curr) const
 template <class T>
 bool BinaryTree<T>::Remove(const T& item)
 {
-	if (root->GetData() == item)
+	if (root != NULL)
 	{
-		RemoveNode(root);
-		return true;
-	}
-	else
-	{
-		return Remove(item, root);
+		if (root->GetData() == item)
+		{
+			root = RemoveNode(root);
+			return true;
+		}
+		else
+		{
+			return Remove(item, root);
+		}
 	}
 
 	return false;
@@ -164,9 +208,42 @@ bool BinaryTree<T>::Remove(const T& item)
 template <class T>
 bool BinaryTree<T>::Remove(const T& item, BinaryTreeNode<T>* parent)
 {
+	if (parent == NULL)
+	{
+		return false;
+	}
 
-
-	return false;
+	BinaryTreeNode<T>* curr = NULL;
+	// Head to the left
+	if (item < parent->GetData())
+	{
+		if (parent->GetLeft() && item == parent->GetLeft()->GetData())
+		{
+			curr = parent->GetLeft();
+			BinaryTreeNode<T>* newChild = RemoveNode(curr);
+			parent->SetLeft(newChild);
+			return true;
+		}
+		else
+		{
+			Remove(item, parent->GetLeft());
+		}
+	}
+	// Head to the right
+	else if (item > parent->GetData())
+	{
+		if (parent->GetRight() && item == parent->GetRight()->GetData())
+		{
+			curr = parent->GetRight();
+			BinaryTreeNode<T>* newChild = RemoveNode(curr);
+			parent->SetRight(newChild);
+			return true;
+		}
+		else
+		{
+			Remove(item, parent->GetRight());
+		}
+	}
 }
 
 // RemoveNode
@@ -178,6 +255,11 @@ bool BinaryTree<T>::Remove(const T& item, BinaryTreeNode<T>* parent)
 template <class T>
 BinaryTreeNode<T>* BinaryTree<T>::RemoveNode(BinaryTreeNode<T>* curr)
 {
+	if (curr == NULL)
+	{
+		return NULL;
+	}
+
 	// no children
 	if (curr->GetLeft() == NULL && curr->GetRight() == NULL)
 	{
@@ -185,9 +267,15 @@ BinaryTreeNode<T>* BinaryTree<T>::RemoveNode(BinaryTreeNode<T>* curr)
 		return NULL;
 	}
 	// one child
-	else if (curr->GetLeft() == NULL || curr->GetRight() == NULL)
+	else if (curr->GetRight() == NULL)
 	{
-		BinaryTreeNode<T>* child = curr->GetLeft() == NULL ? curr->GetLeft() : curr->GetRight();
+		BinaryTreeNode<T>* child = curr->GetLeft();
+		delete curr;
+		return child;
+	}
+	else if (curr->GetLeft() == NULL)
+	{
+		BinaryTreeNode<T>* child = curr->GetRight();
 		delete curr;
 		return child;
 	}
@@ -206,7 +294,7 @@ BinaryTreeNode<T>* BinaryTree<T>::RemoveNode(BinaryTreeNode<T>* curr)
 
 		if (parent == curr)
 		{
-			parent->SetRight(parent->GetRight());
+			parent->SetRight(min->GetRight());
 		}
 		else
 		{
